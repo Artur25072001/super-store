@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="en-CA">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- Demo/preview site: a fictional business used as a portfolio sample by
+         Artur Dymchevskyi. Not a real company; kept out of search results. -->
+    <meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex" />
+    <meta
+      name="description"
+      content="Product page — Orchard Lane Provisions, a fictional Niagara farm market demo store with a full catalogue, basket and checkout."
+    />
+    <title>Product — Orchard Lane Provisions</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500..700&family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              forest: { DEFAULT: "#2C4A34", dark: "#223A29", soft: "#E8EEE6" },
+              honey: { DEFAULT: "#C6813F", dark: "#A86427", soft: "#F5E9D7" },
+              cream: "#FAF6EF",
+              line: "#E5DFD3",
+              ink: { DEFAULT: "#221F1A", muted: "#6B675F" },
+              berry: "#8E3B46",
+            },
+            fontFamily: {
+              sans: ["Inter", "ui-sans-serif", "system-ui", "sans-serif"],
+              display: ['"Fraunces"', "Georgia", "serif"],
+            },
+          },
+        },
+      };
+    </script>
+
+    <style>
+      body {
+        -webkit-font-smoothing: antialiased;
+        text-rendering: optimizeLegibility;
+      }
+      a:focus-visible,
+      button:focus-visible,
+      input:focus-visible,
+      select:focus-visible,
+      summary:focus-visible {
+        outline: 2px solid #2c4a34;
+        outline-offset: 3px;
+        border-radius: 2px;
+      }
+    </style>
+  </head>
+
+  <body
+    data-page="product.html"
+    class="flex min-h-screen flex-col bg-cream font-sans text-ink antialiased"
+  >
+    <main class="flex-1">
+      <div class="mx-auto max-w-6xl px-4 py-8 sm:px-6 sm:py-12">
+        <div class="flex flex-wrap items-center justify-between gap-x-4 gap-y-3">
+          <!-- Back to wherever the shopper came from; the href is the fallback,
+               so it still works with JavaScript off or on a direct link. -->
+          <a
+            id="p-back"
+            href="shop.html"
+            class="inline-flex items-center gap-2 rounded-sm border border-line bg-white px-4 py-2 text-sm font-semibold text-muted transition hover:-translate-y-px hover:border-forest hover:text-forest"
+          >
+            <svg class="h-4 w-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5"/><path d="m11 18-6-6 6-6"/></svg>
+            Back
+          </a>
+          <nav id="p-crumb" class="text-sm text-muted" aria-label="Breadcrumb"></nav>
+        </div>
+
+        <div id="product" class="mt-6 grid gap-10 lg:grid-cols-2 lg:gap-16">
+          <!-- Art column -->
+          <div class="relative overflow-hidden rounded-md border border-line bg-white">
+            <div id="p-badges" class="absolute left-4 top-4 z-10 flex flex-col items-start gap-2"></div>
+            <div id="p-art" class="aspect-square w-full"></div>
+          </div>
+
+          <!-- Details column -->
+          <div class="flex flex-col">
+            <p id="p-cat" class="text-xs font-semibold uppercase tracking-[0.16em] text-muted"></p>
+            <h1 id="p-name" class="mt-2 font-display text-3xl font-semibold leading-tight tracking-tight text-ink sm:text-4xl"></h1>
+            <div class="mt-3 flex flex-wrap items-center gap-2 text-sm text-muted">
+              <span id="p-stars"></span>
+              <span id="p-reviews"></span>
+            </div>
+            <div class="mt-5 flex flex-wrap items-baseline gap-3">
+              <p id="p-price" class="font-display text-4xl font-bold text-ink"></p>
+              <p id="p-stock" class="text-sm text-muted"></p>
+            </div>
+            <p id="p-desc" class="mt-5 max-w-lg text-base leading-relaxed text-muted"></p>
+
+            <div id="p-pair" class="mt-5 hidden rounded-sm border border-honey/40 bg-honey-soft px-4 py-3.5 text-sm leading-relaxed text-ink"></div>
+
+            <div id="p-variant-wrap" class="mt-7 hidden">
+              <label for="p-variant" class="block text-xs font-semibold uppercase tracking-[0.12em] text-ink">Choose</label>
+              <select
+                id="p-variant"
+                class="mt-2.5 w-full max-w-sm rounded-sm border border-line bg-white px-4 py-3 text-sm text-ink transition focus:border-forest focus:outline-none"
+              ></select>
+            </div>
+
+            <div class="mt-7 flex flex-wrap items-center gap-3">
+              <div class="inline-flex items-center rounded-sm border border-line bg-white">
+                <button type="button" id="q-dec" class="h-11 w-11 text-lg text-muted transition hover:text-ink" aria-label="Decrease quantity">&minus;</button>
+                <span id="q-val" class="w-10 text-center text-base font-medium">1</span>
+                <button type="button" id="q-inc" class="h-11 w-11 text-lg text-muted transition hover:text-ink" aria-label="Increase quantity">+</button>
+              </div>
+              <button
+                type="button"
+                id="p-add"
+                class="flex-1 rounded-sm bg-forest px-7 py-3.5 text-sm font-semibold text-cream transition hover:-translate-y-px hover:bg-forest-dark sm:flex-none"
+              >
+                Add to basket &mdash; <span id="p-total"></span>
+              </button>
+            </div>
+
+            <dl class="mt-8 grid gap-3 border-t border-line pt-6 text-sm sm:grid-cols-2">
+              <div class="flex items-start gap-2.5 text-muted">
+                <svg class="mt-0.5 h-4 w-4 shrink-0 text-forest" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7h13v10H3zM16 10h3l2 3v4h-5"/><circle cx="7" cy="18" r="1.8"/><circle cx="17.5" cy="18" r="1.8"/></svg>
+                <span>Next-day delivery across Niagara, free over $60</span>
+              </div>
+              <div class="flex items-start gap-2.5 text-muted">
+                <svg class="mt-0.5 h-4 w-4 shrink-0 text-forest" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10 12 4l8 6v9a1 1 0 0 1-1 1h-4v-6H9v6H5a1 1 0 0 1-1-1z"/></svg>
+                <span>Free pickup at the farm stand, Thu&ndash;Sun</span>
+              </div>
+              <div class="flex items-start gap-2.5 text-muted">
+                <svg class="mt-0.5 h-4 w-4 shrink-0 text-forest" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12h18"/><path d="M12 3v18"/></svg>
+                <span>Made on the farm, packed the morning it ships</span>
+              </div>
+              <div class="flex items-start gap-2.5 text-muted">
+                <svg class="mt-0.5 h-4 w-4 shrink-0 text-forest" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                <span>Cracked, wilted or wrong? Replaced or refunded</span>
+              </div>
+            </dl>
+          </div>
+        </div>
+
+        <!-- Not-found fallback -->
+        <div id="p-missing" class="mt-6 hidden rounded-md border border-line bg-white px-6 py-14 text-center">
+          <p class="font-display text-xl font-semibold text-ink">We could not find that one</p>
+          <p class="mx-auto mt-2 max-w-md text-sm leading-relaxed text-muted">
+            The link points at a product that is not on the shelves &mdash; it may
+            have sold out for the season.
+          </p>
+          <a href="shop.html" class="mt-5 inline-flex rounded-sm bg-forest px-5 py-2.5 text-sm font-semibold text-cream transition hover:bg-forest-dark">Back to the market</a>
+        </div>
+
+        <!-- Related products -->
+        <section id="p-related-section" class="mt-16 hidden">
+          <h2 class="font-display text-2xl font-semibold tracking-tight text-ink">
+            More from the same shelf
+          </h2>
+          <div id="p-related" class="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-4"></div>
+        </section>
+      </div>
+    </main>
+
+    <script src="products.js"></script>
+    <script src="store.js"></script>
+    <script>
+      /* Product page: render by ?id=, variant picker, quantity stepper. */
+      (function () {
+        "use strict";
+        var p = Store.find(new URLSearchParams(location.search).get("id"));
+        if (!p) {
+          document.getElementById("product").classList.add("hidden");
+          document.getElementById("p-missing").classList.remove("hidden");
+          return;
+        }
+
+        var qty = 1;
+        var vIdx = 0;
+
+        /* Back button: steps back in history when the shopper came from this
+           site, otherwise follows the link to the product's own shelf. */
+        var backEl = document.getElementById("p-back");
+        backEl.href = "shop.html?cat=" + p.cat;
+        backEl.addEventListener("click", function (e) {
+          if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+          var sameSite = false;
+          try {
+            sameSite = !!document.referrer && new URL(document.referrer).origin === location.origin;
+          } catch (err) {
+            sameSite = false;
+          }
+          if (sameSite && window.history.length > 1) {
+            e.preventDefault();
+            window.history.back();
+          }
+        });
+
+        document.getElementById("p-crumb").innerHTML =
+          '<a href="index.html" class="hover:text-forest">Home</a> / ' +
+          '<a href="shop.html" class="hover:text-forest">Shop</a> / ' +
+          '<a href="shop.html?cat=' + p.cat + '" class="hover:text-forest">' + Store.catName(p.cat) + "</a> / " +
+          '<span class="text-ink">' + Store.esc(p.name) + "</span>";
+
+        document.title = p.name + " — Orchard Lane Provisions";
+
+        document.getElementById("p-art").innerHTML = Store.art(p, "block h-full w-full");
+        document.getElementById("p-badges").innerHTML =
+          (p.badge ? '<span class="rounded-full bg-forest px-3 py-1 text-[0.65rem] font-semibold uppercase tracking-[0.14em] text-cream">' + Store.esc(p.badge) + "</span>" : "") +
+          (p.stock <= 15 ? '<span class="rounded-full bg-white/90 px-3 py-1 text-[0.65rem] font-semibold text-berry">Only ' + p.stock + " left</span>" : "");
+
+        document.getElementById("p-cat").textContent = Store.catName(p.cat);
+        document.getElementById("p-name").textContent = p.name;
+        document.getElementById("p-stars").innerHTML = Store.stars(p);
+        document.getElementById("p-reviews").textContent = p.rating + " from " + p.reviews + " reviews";
+        document.getElementById("p-desc").textContent = p.desc;
+        document.getElementById("p-stock").textContent =
+          p.stock <= 15 ? "Only " + p.stock + " left on the shelf" : p.stock + " on the shelf this week";
+
+        if (p.pair) {
+          var pair = document.getElementById("p-pair");
+          pair.textContent = p.pair;
+          pair.classList.remove("hidden");
+        }
+
+        var variantSel = document.getElementById("p-variant");
+        var variantWrap = document.getElementById("p-variant-wrap");
+        if (p.variants) {
+          variantWrap.classList.remove("hidden");
+          variantSel.innerHTML = p.variants
+            .map(function (v, i) {
+              return '<option value="' + i + '">' + Store.esc(v.name) +
+                (v.d ? " (&plus; $" + v.d.toFixed(2) + ")" : "") + "</option>";
+            })
+            .join("");
+          variantSel.addEventListener("change", function () {
+            vIdx = parseInt(variantSel.value, 10) || 0;
+            paint();
+          });
+        }
+
+        function unit() {
+          return p.price + (p.variants ? p.variants[vIdx].d : 0);
+        }
+        function paint() {
+          document.getElementById("p-price").textContent = "$" + unit().toFixed(2);
+          document.getElementById("q-val").textContent = qty;
+          document.getElementById("p-total").textContent = "$" + (unit() * qty).toFixed(2);
+        }
+
+        document.getElementById("q-inc").addEventListener("click", function () {
+          qty = Math.min(qty + 1, 99);
+          paint();
+        });
+        document.getElementById("q-dec").addEventListener("click", function () {
+          qty = Math.max(qty - 1, 1);
+          paint();
+        });
+
+        var addBtn = document.getElementById("p-add");
+        addBtn.addEventListener("click", function () {
+          Store.add(p.id, vIdx, qty);
+          Store.refresh();
+          Store.showToast("Added to your basket — " + p.name + " &times; " + qty);
+          Store.openDrawer();
+          qty = 1;
+          paint();
+        });
+
+        paint();
+
+        /* Related: same shelf, minus this product, four of them. */
+        var related = PRODUCTS.filter(function (x) { return x.cat === p.cat && x.id !== p.id; }).slice(0, 4);
+        if (related.length) {
+          document.getElementById("p-related-section").classList.remove("hidden");
+          document.getElementById("p-related").innerHTML = related
+            .map(function (x) { return Store.card(x); })
+            .join("");
+        }
+      })();
+    </script>
+  </body>
+</html>
+

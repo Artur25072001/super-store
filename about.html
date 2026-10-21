@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en-CA">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- Demo/preview site: a fictional business used as a portfolio sample by
+         Artur Dymchevskyi. Not a real company; kept out of search results. -->
+    <meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex" />
+    <meta
+      name="description"
+      content="The story of Orchard Lane Provisions — a fictional Niagara farm market demo store: two hundred acres, a bakery, a cidery, and an online shop built as a portfolio sample."
+    />
+    <title>Our Story — Orchard Lane Provisions</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500..700&family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              forest: { DEFAULT: "#2C4A34", dark: "#223A29", soft: "#E8EEE6" },
+              honey: { DEFAULT: "#C6813F", dark: "#A86427", soft: "#F5E9D7" },
+              cream: "#FAF6EF",
+              line: "#E5DFD3",
+              ink: { DEFAULT: "#221F1A", muted: "#6B675F" },
+              berry: "#8E3B46",
+            },
+            fontFamily: {
+              sans: ["Inter", "ui-sans-serif", "system-ui", "sans-serif"],
+              display: ['"Fraunces"', "Georgia", "serif"],
+            },
+          },
+        },
+      };
+    </script>
+
+    <style>
+      body {
+        -webkit-font-smoothing: antialiased;
+        text-rendering: optimizeLegibility;
+      }
+      a:focus-visible,
+      button:focus-visible,
+      input:focus-visible,
+      select:focus-visible,
+      summary:focus-visible {
+        outline: 2px solid #2c4a34;
+        outline-offset: 3px;
+        border-radius: 2px;
+      }
+    </style>
+  </head>
+
+  <body
+    data-page="about.html"
+    class="flex min-h-screen flex-col bg-cream font-sans text-ink antialiased"
+  >
+    <main class="flex-1">
+      <div class="mx-auto max-w-3xl px-4 py-14 sm:px-6 sm:py-20">
+        <p class="text-xs font-semibold uppercase tracking-[0.18em] text-muted">Since 1968, in this story</p>
+        <h1 class="mt-3 font-display text-4xl font-semibold tracking-tight text-ink sm:text-5xl">
+          Two hundred acres,
+          <span class="italic text-forest">one farm store.</span>
+        </h1>
+
+        <div class="mt-8 space-y-5 text-base leading-relaxed text-muted">
+          <p>
+            The Lane family planted the first orchard rows on the Escarpment in
+            1968 &mdash; back when &ldquo;farm store&rdquo; meant a table by
+            the road and a coffee tin for the money. Three generations later
+            the table is still there, Thursday to Sunday, plus the hives, the
+            bakery, the press house and the flower beds the market runs on.
+          </p>
+          <p>
+            The online shop is the newest table by the road. Everything on it
+            is made, grown or baked on the farm &mdash; nothing is bought in
+            and resold &mdash; and everything ordered before 11 a.m. is packed
+            the same morning and driven out the next.
+          </p>
+          <p>
+            <strong class="text-ink">A note about this note:</strong> none of
+            that happened, because Orchard Lane Provisions is not a real farm.
+            It is a fictional business built as a portfolio sample by
+            <a href="https://github.com/Artur25072001" target="_blank" rel="noopener" class="font-medium text-forest underline-offset-2 hover:underline">Artur Dymchevskyi</a>
+            to demonstrate a complete online store: catalogue, basket, promo
+            codes, checkout with delivery and pickup, order confirmation and
+            tracking. No payment is collected anywhere on the site.
+          </p>
+        </div>
+
+        <div class="mt-12 grid gap-6 sm:grid-cols-3">
+          <div class="rounded-md border border-line bg-white p-5">
+            <p class="font-display text-3xl font-bold text-ink">1968</p>
+            <p class="mt-1 text-sm text-muted">first orchard rows planted</p>
+          </div>
+          <div class="rounded-md border border-line bg-white p-5">
+            <p class="font-display text-3xl font-bold text-ink">24</p>
+            <p class="mt-1 text-sm text-muted">things on the online shelves</p>
+          </div>
+          <div class="rounded-md border border-line bg-white p-5">
+            <p class="font-display text-3xl font-bold text-ink">0</p>
+            <p class="mt-1 text-sm text-muted">real dollars ever charged here</p>
+          </div>
+        </div>
+
+        <h2 class="mt-16 font-display text-2xl font-semibold tracking-tight text-ink">The crew</h2>
+        <div class="mt-6 space-y-4">
+          <div class="rounded-md border border-line bg-white p-6">
+            <p class="font-display text-lg font-semibold text-ink">Marta Lane &mdash; preserves &amp; the orchard</p>
+            <p class="mt-2 text-sm leading-relaxed text-muted">
+              Runs the jam kitchen and decides what is in season enough to
+              sell. Also the reason the strawberry-rhubarb sells out most
+              weekends.
+            </p>
+          </div>
+          <div class="rounded-md border border-line bg-white p-6">
+            <p class="font-display text-lg font-semibold text-ink">Peter Lane &mdash; bakery &amp; the van</p>
+            <p class="mt-2 text-sm leading-relaxed text-muted">
+              Starts the ovens at 5 a.m., loads the van at 7, and knows every
+              porch on the route without looking at a list.
+            </p>
+          </div>
+          <div class="rounded-md border border-line bg-white p-6">
+            <p class="font-display text-lg font-semibold text-ink">June Okafor &mdash; flowers &amp; the stand</p>
+            <p class="mt-2 text-sm leading-relaxed text-muted">
+              Cuts the bouquets the same morning they ship and keeps the
+              farm stand honest about what is actually fresh.
+            </p>
+          </div>
+        </div>
+
+        <div class="mt-14 flex flex-col items-start justify-between gap-5 rounded-md border border-line bg-forest-soft p-7 sm:flex-row sm:items-center">
+          <div>
+            <h2 class="font-display text-2xl font-semibold tracking-tight text-ink">Come see the shelves</h2>
+            <p class="mt-2 max-w-md text-sm leading-relaxed text-muted">
+              Twenty-four things, packed the morning they ship &mdash; the
+              whole market is one click away.
+            </p>
+          </div>
+          <a href="shop.html" class="shrink-0 rounded-sm bg-forest px-7 py-3.5 text-sm font-semibold text-cream transition hover:-translate-y-px hover:bg-forest-dark">Shop the market</a>
+        </div>
+      </div>
+    </main>
+
+    <script src="products.js"></script>
+    <script src="store.js"></script>
+  </body>
+</html>

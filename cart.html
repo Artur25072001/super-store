@@ -1,0 +1,460 @@
+<!doctype html>
+<html lang="en-CA">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- Demo/preview site: a fictional business used as a portfolio sample by
+         Artur Dymchevskyi. Not a real company; kept out of search results. -->
+    <meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex" />
+    <meta
+      name="description"
+      content="Your basket — Orchard Lane Provisions, a fictional Niagara farm market demo store. Adjust quantities, apply a promo code and see HST and delivery before checkout."
+    />
+    <title>Your Basket — Orchard Lane Provisions</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500..700&family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+
+    <!-- Snipcart (test mode): stylesheet for the live test checkout. The
+         script version is pinned to v3.4.1 like the snipcart.js tag below. -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.snipcart.com/themes/v3.4.1/default/snipcart.css"
+    />
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              forest: { DEFAULT: "#2C4A34", dark: "#223A29", soft: "#E8EEE6" },
+              honey: { DEFAULT: "#C6813F", dark: "#A86427", soft: "#F5E9D7" },
+              cream: "#FAF6EF",
+              line: "#E5DFD3",
+              ink: { DEFAULT: "#221F1A", muted: "#6B675F" },
+              berry: "#8E3B46",
+            },
+            fontFamily: {
+              sans: ["Inter", "ui-sans-serif", "system-ui", "sans-serif"],
+              display: ['"Fraunces"', "Georgia", "serif"],
+            },
+          },
+        },
+      };
+    </script>
+
+    <style>
+      body {
+        -webkit-font-smoothing: antialiased;
+        text-rendering: optimizeLegibility;
+      }
+      a:focus-visible,
+      button:focus-visible,
+      input:focus-visible,
+      select:focus-visible,
+      summary:focus-visible {
+        outline: 2px solid #2c4a34;
+        outline-offset: 3px;
+        border-radius: 2px;
+      }
+    </style>
+  </head>
+
+  <body
+    data-page="cart.html"
+    class="flex min-h-screen flex-col bg-cream font-sans text-ink antialiased"
+  >
+    <main class="flex-1">
+      <div class="mx-auto max-w-6xl px-4 py-10 sm:px-6 sm:py-14">
+        <p class="text-xs font-semibold uppercase tracking-[0.18em] text-muted">Almost there</p>
+        <h1 class="mt-3 font-display text-4xl font-semibold tracking-tight text-ink sm:text-5xl">
+          Your basket
+        </h1>
+
+        <div class="mt-10 grid gap-10 lg:grid-cols-[3fr,2fr] lg:gap-14">
+          <!-- Lines -->
+          <div>
+            <div id="cart-lines" class="divide-y divide-line rounded-md border border-line bg-white"></div>
+
+            <div id="cart-empty" class="hidden rounded-md border border-line bg-white px-6 py-14 text-center">
+              <p class="font-display text-xl font-semibold text-ink">Your basket is empty</p>
+              <p class="mx-auto mt-2 max-w-md text-sm leading-relaxed text-muted">
+                Nothing in it yet &mdash; the shelves are full and the van leaves
+                at 11.
+              </p>
+              <a href="shop.html" class="mt-5 inline-flex rounded-sm bg-forest px-5 py-2.5 text-sm font-semibold text-cream transition hover:bg-forest-dark">Browse the market</a>
+            </div>
+
+            <div id="ship-note" class="mt-6 rounded-sm border border-line bg-white px-4 py-3.5 text-sm leading-relaxed text-muted"></div>
+          </div>
+
+          <!-- Summary -->
+          <div class="h-fit rounded-md border border-line bg-white p-6 sm:p-7 lg:sticky lg:top-32">
+            <h2 class="font-display text-lg font-semibold tracking-tight text-ink">Order summary</h2>
+
+            <div class="mt-5">
+              <label for="promo-code" class="block text-xs font-semibold uppercase tracking-[0.12em] text-ink">Promo code</label>
+              <div class="mt-2.5 flex gap-2">
+                <input
+                  id="promo-code"
+                  type="text"
+                  placeholder="e.g. NIAGARA10"
+                  autocomplete="off"
+                  class="min-w-0 flex-1 rounded-sm border border-line bg-cream px-3.5 py-2.5 text-sm uppercase tracking-wide text-ink placeholder:normal-case placeholder:tracking-normal placeholder:text-muted/70 transition focus:border-forest focus:outline-none"
+                />
+                <button
+                  id="promo-apply"
+                  type="button"
+                  class="shrink-0 rounded-sm border border-forest px-4 py-2.5 text-sm font-semibold text-forest transition hover:bg-forest hover:text-cream"
+                >
+                  Apply
+                </button>
+              </div>
+              <p id="promo-msg" class="mt-2 hidden text-xs leading-relaxed"></p>
+              <p class="mt-2 text-xs text-muted">Try <code class="rounded bg-forest-soft px-1.5 py-0.5 font-mono text-forest-dark">NIAGARA10</code> for 10% off, or <code class="rounded bg-forest-soft px-1.5 py-0.5 font-mono text-forest-dark">FREESHIP</code> for free delivery.</p>
+            </div>
+
+            <dl class="mt-6 space-y-3 border-t border-line pt-5 text-sm">
+              <div class="flex items-baseline justify-between gap-4">
+                <dt class="text-muted">Subtotal</dt>
+                <dd id="sum-sub" class="font-display text-base font-semibold text-ink"></dd>
+              </div>
+              <div id="sum-disc-row" class="hidden flex items-baseline justify-between gap-4">
+                <dt class="text-muted">
+                  Discount <span id="sum-promo-name" class="font-medium text-forest"></span>
+                  <button id="promo-remove" type="button" class="ml-1 text-xs text-muted underline underline-offset-2 hover:text-berry">remove</button>
+                </dt>
+                <dd id="sum-disc" class="font-display text-base font-semibold text-forest"></dd>
+              </div>
+              <div class="flex items-baseline justify-between gap-4">
+                <dt class="text-muted">Estimated delivery</dt>
+                <dd id="sum-ship" class="font-medium text-ink"></dd>
+              </div>
+              <div class="flex items-baseline justify-between gap-4">
+                <dt class="text-muted">HST (13%)</dt>
+                <dd id="sum-tax" class="font-medium text-ink"></dd>
+              </div>
+              <div class="flex items-baseline justify-between gap-4 border-t border-line pt-4">
+                <dt class="font-display text-base font-semibold text-ink">Total</dt>
+                <dd id="sum-total" class="font-display text-2xl font-bold text-ink"></dd>
+              </div>
+            </dl>
+
+            <a
+              id="checkout-link"
+              href="checkout.html"
+              class="mt-6 flex w-full items-center justify-center rounded-sm bg-forest px-6 py-3.5 text-sm font-semibold text-cream transition hover:-translate-y-px hover:bg-forest-dark"
+              >Continue to checkout</a
+            >
+            <p class="mt-3 text-center text-xs leading-relaxed text-muted">
+              Pay on delivery &mdash; card, cash or e-transfer. Nothing is
+              charged online on this demo store.
+            </p>
+
+            <!-- Live test checkout: the same basket handed to a real Snipcart
+                 checkout running in test mode — no money ever moves. -->
+            <div class="mt-6 border-t border-line pt-5">
+              <h3 class="font-display text-sm font-semibold text-ink">
+                Or try the live test checkout
+              </h3>
+              <p class="mt-2 text-xs leading-relaxed text-muted">
+                A real Snipcart checkout in test mode &mdash; the same basket,
+                real payment screens, and no money moves. Pay with the test
+                card
+                <code class="rounded bg-forest-soft px-1.5 py-0.5 font-mono text-forest-dark">4242&nbsp;4242&nbsp;4242&nbsp;4242</code>,
+                any future expiry, any CVC. Promo codes from this demo basket
+                do not carry over &mdash; discount codes live in the Snipcart
+                dashboard.
+              </p>
+              <button
+                id="snip-go"
+                type="button"
+                class="mt-4 flex w-full items-center justify-center rounded-sm border border-honey bg-white px-6 py-3 text-sm font-semibold text-honey-dark transition hover:-translate-y-px hover:bg-honey hover:text-white"
+              >
+                Take this basket to Snipcart
+              </button>
+              <p class="mt-2 text-center text-[0.7rem] leading-relaxed text-muted">
+                Opens the Snipcart cart &mdash; finish the order there and it
+                lands on the confirmation page like any other order.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recommended -->
+        <section class="mt-16">
+          <h2 class="font-display text-2xl font-semibold tracking-tight text-ink">Add a little something</h2>
+          <div id="cart-reco" class="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-4"></div>
+        </section>
+      </div>
+    </main>
+
+    <!-- Snipcart (test mode). The data-api-key below is the PUBLIC API key,
+         which is designed to be embedded in the page — never put a secret
+         API key here. The hidden #snipcart div is where the cart renders. -->
+    <div
+      hidden
+      id="snipcart"
+      data-api-key="YmExNWI2NTktOTYxYy00ZjFhLTgyZmYtNzU0ZjEwNmU5Y2JiNjM5MjcxMzk5ODQ5MTYzNDMw"
+    ></div>
+    <script
+      src="https://cdn.snipcart.com/themes/v3.4.1/default/snipcart.js"
+      data-api-key="YmExNWI2NTktOTYxYy00ZjFhLTgyZmYtNzU0ZjEwNmU5Y2JiNjM5MjcxMzk5ODQ5MTYzNDMw"
+      defer
+    ></script>
+    <script src="products.js"></script>
+    <script src="store.js"></script>
+    <script>
+      /* Basket page: line editing, promo codes, live totals. Uses its own
+         data-cinc / data-cdec / data-crm hooks so the global drawer handlers
+         in store.js do not double-apply the same click. */
+      (function () {
+        "use strict";
+        var linesEl = document.getElementById("cart-lines");
+        var emptyEl = document.getElementById("cart-empty");
+        var FREE_AT = Store.FREE_SHIP_AT;
+
+        function render() {
+          var ls = Store.lines();
+          emptyEl.classList.toggle("hidden", ls.length !== 0);
+          linesEl.classList.toggle("hidden", ls.length === 0);
+
+          linesEl.innerHTML = ls
+            .map(function (l) {
+              return (
+                '<div class="flex gap-4 p-4 sm:p-5">' +
+                '<a href="product.html?id=' + l.p.id + '" class="h-20 w-20 shrink-0 overflow-hidden rounded-sm sm:h-24 sm:w-24">' + Store.art(l.p) + "</a>" +
+                '<div class="min-w-0 flex-1">' +
+                '<a href="product.html?id=' + l.p.id + '" class="font-display text-base font-semibold text-ink hover:text-forest">' + Store.esc(l.p.name) + "</a>" +
+                (l.variant ? '<p class="mt-0.5 text-xs text-muted">' + Store.esc(l.variant.name) + "</p>" : "") +
+                '<p class="mt-1 text-xs text-muted">' + Store.fmt(l.unit) + " each</p>" +
+                "</div>" +
+                '<div class="flex flex-col items-end justify-between gap-2">' +
+                '<p class="font-display text-base font-semibold text-ink">' + Store.fmt(l.total) + "</p>" +
+                '<div class="flex items-center gap-3">' +
+                '<div class="inline-flex items-center rounded-sm border border-line">' +
+                '<button type="button" data-cdec="' + l.i + '" class="h-9 w-9 text-lg leading-none text-muted transition hover:text-ink" aria-label="Decrease ' + Store.esc(l.p.name) + ' quantity">&minus;</button>' +
+                '<span class="w-9 text-center text-sm font-medium text-ink">' + l.q + "</span>" +
+                '<button type="button" data-cinc="' + l.i + '" class="h-9 w-9 text-lg leading-none text-muted transition hover:text-ink" aria-label="Increase ' + Store.esc(l.p.name) + ' quantity">+</button>' +
+                "</div>" +
+                '<button type="button" data-crm="' + l.i + '" class="text-xs text-muted underline-offset-2 transition hover:text-berry hover:underline">Remove</button>' +
+                "</div></div></div>"
+              );
+            })
+            .join("");
+
+          var t = Store.totals("delivery");
+          document.getElementById("sum-sub").textContent = Store.fmt(t.sub);
+          document.getElementById("sum-ship").textContent = t.shipping === 0 ? "Free" : Store.fmt(t.shipping);
+          document.getElementById("sum-tax").textContent = Store.fmt(t.tax);
+          document.getElementById("sum-total").textContent = Store.fmt(t.total);
+          document.getElementById("sum-disc").textContent = "-" + Store.fmt(t.discount);
+          var discRow = document.getElementById("sum-disc-row");
+          discRow.classList.toggle("hidden", !t.promo || t.discount === 0);
+          document.getElementById("sum-promo-name").textContent = t.promo ? "(" + Store.getPromo().toUpperCase() + ")" : "";
+
+          var note = document.getElementById("ship-note");
+          if (!ls.length) {
+            note.classList.add("hidden");
+          } else {
+            note.classList.remove("hidden");
+            if (t.sub < FREE_AT) {
+              note.innerHTML =
+                "Add <strong class='text-ink'>" + Store.fmt(FREE_AT - t.sub) + "</strong> more to your basket and delivery is on us.";
+            } else {
+              note.innerHTML = "<strong class='text-forest'>Free delivery unlocked</strong> — your basket rides for nothing over $60.";
+            }
+          }
+
+          var co = document.getElementById("checkout-link");
+          co.classList.toggle("pointer-events-none", ls.length === 0);
+          co.classList.toggle("opacity-40", ls.length === 0);
+        }
+
+        linesEl.addEventListener("click", function (e) {
+          var b = e.target.closest("[data-cinc],[data-cdec],[data-crm]");
+          if (!b) return;
+          var i = parseInt(b.getAttribute("data-cinc") || b.getAttribute("data-cdec") || b.getAttribute("data-crm"), 10);
+          if (b.hasAttribute("data-cinc")) {
+            Store.setQty(i, Store.lines()[i].q + 1);
+          } else if (b.hasAttribute("data-cdec")) {
+            Store.setQty(i, Store.lines()[i].q - 1);
+          } else {
+            Store.removeLine(i);
+          }
+          Store.refresh();
+          render();
+        });
+
+        function promoMessage(text, good) {
+          var msg = document.getElementById("promo-msg");
+          msg.textContent = text;
+          msg.className = "mt-2 text-xs leading-relaxed " + (good ? "text-forest" : "text-berry");
+        }
+        function promoClear() {
+          document.getElementById("promo-msg").classList.add("hidden");
+        }
+
+        document.getElementById("promo-apply").addEventListener("click", function () {
+          var code = document.getElementById("promo-code").value.trim().toUpperCase();
+          if (!code) {
+            Store.setPromo("");
+            promoClear();
+            Store.refresh();
+            render();
+            return;
+          }
+          if (Store.PROMOS[code]) {
+            Store.setPromo(code);
+            promoClear();
+            Store.refresh();
+            render();
+            Store.showToast("Code applied — " + Store.PROMOS[code].label);
+          } else {
+            Store.setPromo("");
+            Store.refresh();
+            render();
+            promoMessage("That code is not on the board this week. Try NIAGARA10 or FREESHIP.", false);
+          }
+        });
+        document.getElementById("promo-remove").addEventListener("click", function () {
+          Store.setPromo("");
+          document.getElementById("promo-code").value = "";
+          promoClear();
+          Store.refresh();
+          render();
+        });
+
+        /* Recommendations: four things not already in the basket. */
+        var inCart = {};
+        Store.lines().forEach(function (l) { inCart[l.p.id] = true; });
+        var reco = PRODUCTS.filter(function (p) { return !inCart[p.id]; }).slice(0, 4);
+        document.getElementById("cart-reco").innerHTML = reco
+          .map(function (p) { return Store.card(p); })
+          .join("");
+
+        document.getElementById("promo-code").value = Store.getPromo();
+        render();
+
+        /* ---- Snipcart: hand this basket to a live checkout in test mode ----
+           Nothing about the mock flow above changes. Clicking the button
+           mirrors the basket into Snipcart, opens its cart, and when the
+           order completes there, the same order is mirrored back onto the
+           confirmation and tracking pages. No money moves — the account is
+           in test mode and only the test card 4242 works. */
+        function whenSnipcart(cb) {
+          if (window.Snipcart) { cb(window.Snipcart); return; }
+          var tries = 0;
+          var timer = setInterval(function () {
+            if (window.Snipcart) {
+              clearInterval(timer);
+              cb(window.Snipcart);
+            } else if (++tries > 150) {
+              clearInterval(timer);
+            }
+          }, 100);
+        }
+
+        async function handoff(SC) {
+          /* Mirror the completed Snipcart order back onto our confirmation
+             and tracking pages — bound once per page load. */
+          var ev = SC.events || (SC.api && SC.api.events);
+          if (ev && ev.on && !window.__olpSnipBound) {
+            window.__olpSnipBound = true;
+            ev.on("cart.confirmed", function (state) {
+              try {
+                Store.placeOrder({
+                  mode: "delivery",
+                  name: (state && state.billingAddress && state.billingAddress.name) ||
+                    (state && state.email) || "Snipcart test order",
+                  email: (state && state.email) || "test@orchardlane.example",
+                  street: "",
+                  city: "",
+                  postal: "",
+                  notes: "Address captured in the Snipcart test checkout.",
+                  payment: "Snipcart test checkout — test card, no money moved",
+                });
+                location.href = "order-confirmed.html";
+              } catch (e) {
+                /* stay on the cart page if mirroring fails */
+              }
+            });
+          }
+
+          /* Clear whatever Snipcart already holds, so a retry never
+             duplicates lines. */
+          try {
+            SC.store.getState().cart.items.items.forEach(function (el) {
+              SC.api.cart.items.remove(el.uniqueId);
+            });
+          } catch (e) {
+            /* first run: nothing to remove */
+          }
+
+          /* Hand each basket line over, variants and quantities included. */
+          var ls = Store.lines();
+          for (var i = 0; i < ls.length; i++) {
+            var l = ls[i];
+            await SC.api.cart.items.add({
+              id: l.p.id + (l.p.variants ? "-v" + l.v : ""),
+              name: l.p.name,
+              price: l.unit,
+              url: new URL("product.html?id=" + l.p.id, location.href).href,
+              quantity: l.q,
+              description: "Demo product — Orchard Lane Provisions",
+              customFields: l.variant
+                ? [{ name: "Choice", value: l.variant.name, displayValue: l.variant.name, type: "textbox", required: false }]
+                : [],
+            });
+          }
+
+          /* Carry the promo over if the same code exists in Snipcart. */
+          var code = Store.getPromo().toUpperCase();
+          if (code) {
+            try { await SC.api.cart.applyDiscount(code); } catch (e) { /* not configured in the dashboard */ }
+          }
+
+          SC.api.theme.cart.open();
+        }
+
+        var snipBtn = document.getElementById("snip-go");
+        snipBtn.addEventListener("click", function () {
+          if (!Store.lines().length) {
+            Store.showToast("Your basket is empty — add something first.");
+            return;
+          }
+          var label = snipBtn.textContent;
+          snipBtn.disabled = true;
+          snipBtn.classList.add("opacity-60");
+          snipBtn.textContent = "Opening Snipcart\u2026";
+          whenSnipcart(function (SC) {
+            handoff(SC)
+              .then(function () {
+                snipBtn.disabled = false;
+                snipBtn.classList.remove("opacity-60");
+                snipBtn.textContent = label;
+              })
+              .catch(function () {
+                snipBtn.disabled = false;
+                snipBtn.classList.remove("opacity-60");
+                snipBtn.textContent = label;
+                Store.showToast("Could not reach Snipcart — try again in a moment.");
+              });
+          });
+        });
+      })();
+    </script>
+  </body>
+</html>
+
+

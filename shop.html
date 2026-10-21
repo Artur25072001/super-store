@@ -1,0 +1,465 @@
+<!doctype html>
+<html lang="en-CA">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- Demo/preview site: a fictional business used as a portfolio sample by
+         Artur Dymchevskyi. Not a real company; kept out of search results. -->
+    <meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex" />
+    <meta
+      name="description"
+      content="Shop the Orchard Lane market — 24 jams, honeys, loaves, ciders, teas and bouquets from a fictional Niagara farm, with next-day delivery."
+    />
+    <title>Shop the Market — Orchard Lane Provisions</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500..700&family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              forest: { DEFAULT: "#2C4A34", dark: "#223A29", soft: "#E8EEE6" },
+              honey: { DEFAULT: "#C6813F", dark: "#A86427", soft: "#F5E9D7" },
+              cream: "#FAF6EF",
+              line: "#E5DFD3",
+              ink: { DEFAULT: "#221F1A", muted: "#6B675F" },
+              berry: "#8E3B46",
+            },
+            fontFamily: {
+              sans: ["Inter", "ui-sans-serif", "system-ui", "sans-serif"],
+              display: ['"Fraunces"', "Georgia", "serif"],
+            },
+          },
+        },
+      };
+    </script>
+
+    <style>
+      body {
+        -webkit-font-smoothing: antialiased;
+        text-rendering: optimizeLegibility;
+      }
+      a:focus-visible,
+      button:focus-visible,
+      input:focus-visible,
+      select:focus-visible,
+      summary:focus-visible {
+        outline: 2px solid #2c4a34;
+        outline-offset: 3px;
+        border-radius: 2px;
+      }
+    </style>
+  </head>
+
+  <body
+    data-page="shop.html"
+    class="flex min-h-screen flex-col bg-cream font-sans text-ink antialiased"
+  >
+    <main class="flex-1">
+      <section class="border-b border-line">
+        <div class="mx-auto max-w-6xl px-4 py-10 sm:px-6 sm:py-14">
+          <p class="text-xs font-semibold uppercase tracking-[0.18em] text-muted">
+            The whole market
+          </p>
+          <h1 class="mt-3 font-display text-4xl font-semibold tracking-tight text-ink sm:text-5xl">
+            Shop the shelves
+          </h1>
+          <p class="mt-4 max-w-2xl text-base leading-relaxed text-muted">
+            Twenty-four things, all made on the farm &mdash; filter by shelf,
+            search by name, sort however you like. Everything you add before
+            11 a.m. rides with tomorrow morning&rsquo;s van.
+          </p>
+        </div>
+      </section>
+
+      <!-- ============ FILTER TOOLBAR ============ -->
+      <section class="sticky top-16 z-30 border-b border-line bg-cream/95 backdrop-blur">
+        <div class="mx-auto max-w-6xl px-4 py-4 sm:px-6">
+          <div class="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
+            <div id="cat-chips" class="flex flex-wrap gap-2" role="group" aria-label="Filter by shelf"></div>
+            <div class="flex flex-wrap items-center gap-2">
+              <div class="relative w-full sm:w-56">
+                <svg
+                  class="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted"
+                  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+                  stroke-linecap="round" aria-hidden="true"
+                ><circle cx="11" cy="11" r="7"/><path d="m20 20-3.8-3.8"/></svg>
+                <input
+                  id="search"
+                  type="search"
+                  placeholder="Search the market&hellip;"
+                  autocomplete="off"
+                  class="h-10 w-full rounded-full border border-line bg-white py-0 pl-10 pr-4 text-sm text-ink placeholder:text-muted/70 transition hover:border-forest focus:border-forest focus:outline-none"
+                  aria-label="Search products by name"
+                />
+              </div>
+              <span class="flex shrink-0 items-center gap-2 text-sm text-muted">
+                <span id="price-label">Price</span>
+                <span class="relative inline-flex" data-dd>
+                  <!-- The native select stays as the value holder so the filter
+                       state code is unchanged; the visible control is the custom
+                       listbox below, because the browser draws the native popup
+                       itself and its hover highlight is always the system blue. -->
+                  <select id="price" class="hidden" aria-hidden="true" tabindex="-1">
+                    <option value="all">Any price</option>
+                    <option value="u10">Under $10</option>
+                    <option value="1020">$10 &ndash; $20</option>
+                    <option value="o20">Over $20</option>
+                  </select>
+                  <button
+                    type="button"
+                    id="price-trigger"
+                    class="inline-flex h-10 items-center gap-2 rounded-full border border-line bg-white pl-4 pr-3 text-sm text-ink transition hover:border-forest focus:border-forest focus:outline-none"
+                    aria-haspopup="listbox"
+                    aria-expanded="false"
+                    aria-controls="price-list"
+                    aria-labelledby="price-label price-value"
+                  >
+                    <span id="price-value" data-dd-value>Any price</span>
+                    <svg data-dd-chevron class="h-4 w-4 shrink-0 text-muted transition-transform duration-200" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+                  </button>
+                  <ul
+                    id="price-list"
+                    role="listbox"
+                    aria-label="Filter by price"
+                    data-dd-list
+                    class="absolute right-0 top-full z-40 mt-2 hidden w-max min-w-full max-w-[70vw] rounded-xl border border-line bg-white p-1 shadow-lg sm:max-w-xs"
+                  ></ul>
+                </span>
+              </span>
+              <span class="flex shrink-0 items-center gap-2 text-sm text-muted">
+                <span id="sort-label">Sort</span>
+                <span class="relative inline-flex" data-dd>
+                  <select id="sort" class="hidden" aria-hidden="true" tabindex="-1">
+                    <option value="popular">Most loved</option>
+                    <option value="price-asc">Price: low to high</option>
+                    <option value="price-desc">Price: high to low</option>
+                    <option value="rating">Best rated</option>
+                    <option value="az">A &ndash; Z</option>
+                  </select>
+                  <button
+                    type="button"
+                    id="sort-trigger"
+                    class="inline-flex h-10 items-center gap-2 rounded-full border border-line bg-white pl-4 pr-3 text-sm text-ink transition hover:border-forest focus:border-forest focus:outline-none"
+                    aria-haspopup="listbox"
+                    aria-expanded="false"
+                    aria-controls="sort-list"
+                    aria-labelledby="sort-label sort-value"
+                  >
+                    <span id="sort-value" data-dd-value>Most loved</span>
+                    <svg data-dd-chevron class="h-4 w-4 shrink-0 text-muted transition-transform duration-200" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+                  </button>
+                  <ul
+                    id="sort-list"
+                    role="listbox"
+                    aria-label="Sort products"
+                    data-dd-list
+                    class="absolute right-0 top-full z-40 mt-2 hidden w-max min-w-full max-w-[70vw] rounded-xl border border-line bg-white p-1 shadow-lg sm:max-w-xs"
+                  ></ul>
+                </span>
+              </span>
+              <button
+                id="clear-filters-bar"
+                type="button"
+                class="hidden h-10 shrink-0 rounded-full border border-forest px-4 text-sm font-semibold text-forest transition hover:bg-forest hover:text-cream"
+              >
+                Clear filters
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ GRID ============ -->
+      <section class="mx-auto max-w-6xl px-4 py-10 sm:px-6 sm:py-14">
+        <p id="result-count" class="text-sm text-muted" aria-live="polite"></p>
+        <div id="grid" class="mt-5 grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"></div>
+        <div id="empty" class="hidden rounded-md border border-line bg-white px-6 py-14 text-center">
+          <p class="font-display text-xl font-semibold text-ink">Nothing on that shelf</p>
+          <p class="mx-auto mt-2 max-w-md text-sm leading-relaxed text-muted">
+            No product matches the filters right now &mdash; try another word,
+            or clear the filters and browse all twenty-four.
+          </p>
+          <button
+            id="clear-filters"
+            type="button"
+            class="mt-5 rounded-sm border border-forest px-5 py-2.5 text-sm font-semibold text-forest transition hover:bg-forest hover:text-cream"
+          >
+            Clear all filters
+          </button>
+        </div>
+      </section>
+    </main>
+
+    <script src="products.js"></script>
+    <script src="store.js"></script>
+    <script>
+      /* Shop page: category chips, search, price filter and sorting. */
+      (function () {
+        "use strict";
+        var state = {
+          cat: "all",
+          q: "",
+          price: "all",
+          sort: "popular",
+        };
+
+        /* Seed the filters from the URL (?cat=, ?q=) so category tiles and
+           the footer links land on a pre-filtered shelf. */
+        var params = new URLSearchParams(location.search);
+        if (params.get("cat") && CATEGORIES.some(function (c) { return c.id === params.get("cat"); })) {
+          state.cat = params.get("cat");
+        }
+        if (params.get("q")) state.q = params.get("q");
+
+        /* Category chips. */
+        var chips = [{ id: "all", name: "Everything" }].concat(CATEGORIES);
+        var chipBox = document.getElementById("cat-chips");
+        chipBox.innerHTML = chips
+          .map(function (c) {
+            var active = state.cat === c.id;
+            return (
+              '<button type="button" data-chip="' + c.id + '" aria-pressed="' + (active ? "true" : "false") + '" class="chip rounded-full border px-4 py-2 text-sm font-semibold ' +
+              (active
+                ? "border-forest bg-forest text-cream"
+                : "border-line bg-white text-muted hover:border-forest hover:text-forest") +
+              '">' + c.name + "</button>"
+            );
+          })
+          .join("");
+        chipBox.addEventListener("click", function (e) {
+          var b = e.target.closest("[data-chip]");
+          if (!b) return;
+          state.cat = b.getAttribute("data-chip");
+          paintChips();
+          render();
+        });
+        function paintChips() {
+          Array.prototype.forEach.call(chipBox.querySelectorAll("[data-chip]"), function (b) {
+            var active = b.getAttribute("data-chip") === state.cat;
+            b.className = "chip rounded-full border px-4 py-2 text-sm font-semibold " +
+              (active ? "border-forest bg-forest text-cream" : "border-line bg-white text-muted hover:border-forest hover:text-forest");
+            b.setAttribute("aria-pressed", active ? "true" : "false");
+          });
+        }
+
+        var searchEl = document.getElementById("search");
+        var priceEl = document.getElementById("price");
+        var sortEl = document.getElementById("sort");
+        var clearBar = document.getElementById("clear-filters-bar");
+        searchEl.value = state.q;
+
+        /* One reset for both the toolbar button and the empty-state button. */
+        function resetFilters() {
+          state = { cat: "all", q: "", price: "all", sort: "popular" };
+          searchEl.value = "";
+          priceEl.value = "all";
+          sortEl.value = "popular";
+          dds.forEach(function (d) { d.sync(); }); // keep the custom dropdown labels in step
+          paintChips();
+          render();
+        }
+
+        var debounce = null;
+        searchEl.addEventListener("input", function () {
+          clearTimeout(debounce);
+          debounce = setTimeout(function () {
+            state.q = searchEl.value.trim().toLowerCase();
+            render();
+          }, 150);
+        });
+        priceEl.addEventListener("change", function () { state.price = priceEl.value; render(); });
+        sortEl.addEventListener("change", function () { state.sort = sortEl.value; render(); });
+        document.getElementById("clear-filters").addEventListener("click", resetFilters);
+        clearBar.addEventListener("click", resetFilters);
+
+        function inPrice(p) {
+          if (state.price === "u10") return p.price < 10;
+          if (state.price === "1020") return p.price >= 10 && p.price <= 20;
+          if (state.price === "o20") return p.price > 20;
+          return true;
+        }
+
+        function filtered() {
+          var list = PRODUCTS.filter(function (p) {
+            var matchCat = state.cat === "all" || p.cat === state.cat;
+            var matchQ = !state.q || p.name.toLowerCase().indexOf(state.q) !== -1;
+            return matchCat && matchQ && inPrice(p);
+          });
+          var sorters = {
+            popular: function (a, b) { return b.reviews - a.reviews; },
+            "price-asc": function (a, b) { return a.price - b.price; },
+            "price-desc": function (a, b) { return b.price - a.price; },
+            rating: function (a, b) { return b.rating - a.rating; },
+            az: function (a, b) { return a.name.localeCompare(b.name); },
+          };
+          return list.sort(sorters[state.sort] || sorters.popular);
+        }
+
+        function render() {
+          var list = filtered();
+          document.getElementById("grid").innerHTML = list
+            .map(function (p) { return Store.card(p); })
+            .join("");
+          document.getElementById("result-count").textContent =
+            list.length + " of " + PRODUCTS.length + " products" +
+            (state.cat === "all" ? "" : " on the " + Store.catName(state.cat) + " shelf");
+          document.getElementById("empty").classList.toggle("hidden", list.length !== 0);
+          document.getElementById("grid").classList.toggle("hidden", list.length === 0);
+
+          /* The toolbar reset only appears when there is something to clear. */
+          var busy = state.cat !== "all" || !!state.q || state.price !== "all" || state.sort !== "popular";
+          clearBar.classList.toggle("hidden", !busy);
+        }
+
+        /* ---- Custom dropdowns --------------------------------------------------
+           The filter menus are our own listbox rather than the native <select>
+           popup: the browser draws that popup itself, so its hover highlight can
+           never be anything but the system blue. The <select> elements stay in
+           the DOM as the value holders, so the state code above is unchanged. */
+        var dds = [];
+
+        function closeAllDropdowns(exceptTrigger) {
+          dds.forEach(function (d) {
+            if (d.trigger !== exceptTrigger) d.close();
+          });
+        }
+
+        function makeDropdown(sel) {
+          var wrap = sel.closest("[data-dd]");
+          var trigger = wrap.querySelector("button[aria-haspopup]");
+          var list = wrap.querySelector("[data-dd-list]");
+          var valueEl = wrap.querySelector("[data-dd-value]");
+          var chevron = wrap.querySelector("[data-dd-chevron]");
+          var opts = [];
+
+          list.innerHTML = Array.prototype.map
+            .call(sel.options, function (o, i) {
+              return (
+                '<li role="option" tabindex="-1" id="' + list.id + "-opt-" + i + '" data-value="' + Store.esc(o.value) + '"' +
+                ' class="flex cursor-pointer items-center justify-between gap-3 rounded-lg px-3 py-2 text-sm text-ink transition hover:bg-forest-soft hover:text-forest-dark focus:bg-forest-soft focus:text-forest-dark focus:outline-none">' +
+                '<span class="min-w-0 truncate">' + Store.esc(o.textContent) + "</span>" +
+                '<svg class="h-4 w-4 shrink-0 text-forest" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>' +
+                "</li>"
+              );
+            })
+            .join("");
+          opts = Array.prototype.slice.call(list.querySelectorAll("[role=option]"));
+
+          function isOpen() {
+            return !list.classList.contains("hidden");
+          }
+
+          /* Mirror the select's current value into the trigger and the ticks. */
+          function sync() {
+            var i = sel.selectedIndex < 0 ? 0 : sel.selectedIndex;
+            valueEl.textContent = sel.options[i] ? sel.options[i].textContent : "";
+            opts.forEach(function (li, k) {
+              var on = k === i;
+              li.setAttribute("aria-selected", on ? "true" : "false");
+              li.classList.toggle("font-semibold", on);
+              li.classList.toggle("text-forest", on);
+              li.querySelector("svg").classList.toggle("invisible", !on);
+            });
+          }
+
+          function open() {
+            closeAllDropdowns(trigger);
+            list.classList.remove("hidden");
+            trigger.setAttribute("aria-expanded", "true");
+            chevron.classList.add("rotate-180");
+          }
+          function close() {
+            list.classList.add("hidden");
+            trigger.setAttribute("aria-expanded", "false");
+            chevron.classList.remove("rotate-180");
+          }
+          function choose(li) {
+            if (!li) return;
+            sel.value = li.getAttribute("data-value");
+            sel.dispatchEvent(new Event("change")); // the change listeners above re-render
+            sync();
+            close();
+            trigger.focus();
+          }
+
+          trigger.addEventListener("click", function () {
+            if (isOpen()) {
+              close();
+            } else {
+              open();
+              opts[sel.selectedIndex < 0 ? 0 : sel.selectedIndex].focus();
+            }
+          });
+
+          trigger.addEventListener("keydown", function (e) {
+            if (e.key === "ArrowDown" || e.key === "ArrowUp" || e.key === "Enter" || e.key === " ") {
+              e.preventDefault();
+              open();
+              opts[sel.selectedIndex < 0 ? 0 : sel.selectedIndex].focus();
+            }
+          });
+
+          list.addEventListener("click", function (e) {
+            choose(e.target.closest("[role=option]"));
+          });
+
+          list.addEventListener("keydown", function (e) {
+            var i = opts.indexOf(document.activeElement);
+            if (e.key === "ArrowDown" || e.key === "ArrowUp") {
+              e.preventDefault();
+              var next = e.key === "ArrowDown" ? Math.min(i + 1, opts.length - 1) : Math.max(i - 1, 0);
+              opts[next].focus();
+            } else if (e.key === "Home") {
+              e.preventDefault();
+              opts[0].focus();
+            } else if (e.key === "End") {
+              e.preventDefault();
+              opts[opts.length - 1].focus();
+            } else if (e.key === "Enter" || e.key === " ") {
+              e.preventDefault();
+              choose(document.activeElement);
+            } else if (e.key === "Escape") {
+              e.preventDefault();
+              close();
+              trigger.focus();
+            } else if (e.key === "Tab") {
+              close();
+            }
+          });
+
+          sync();
+          return { sync: sync, close: close, trigger: trigger, list: list };
+        }
+
+        dds.push(makeDropdown(document.getElementById("price")));
+        dds.push(makeDropdown(document.getElementById("sort")));
+
+        /* Clicking anywhere else, or pressing Escape, closes the open menu. */
+        document.addEventListener("click", function (e) {
+          dds.forEach(function (d) {
+            if (!d.list.contains(e.target) && !d.trigger.contains(e.target)) d.close();
+          });
+        });
+        document.addEventListener("keydown", function (e) {
+          if (e.key === "Escape") closeAllDropdowns(null);
+        });
+
+        render();
+      })();
+    </script>
+  </body>
+</html>
+

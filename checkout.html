@@ -1,0 +1,488 @@
+<!doctype html>
+<html lang="en-CA">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- Demo/preview site: a fictional business used as a portfolio sample by
+         Artur Dymchevskyi. Not a real company, and this checkout is a
+         demonstration: no payment is ever collected. Kept out of search
+         results like every page of this demo. -->
+    <meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex" />
+    <meta
+      name="description"
+      content="Checkout — Orchard Lane Provisions demo store. Three steps: contact details, delivery or pickup, and payment on delivery. No real payment is collected."
+    />
+    <title>Checkout — Orchard Lane Provisions</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500..700&family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              forest: { DEFAULT: "#2C4A34", dark: "#223A29", soft: "#E8EEE6" },
+              honey: { DEFAULT: "#C6813F", dark: "#A86427", soft: "#F5E9D7" },
+              cream: "#FAF6EF",
+              line: "#E5DFD3",
+              ink: { DEFAULT: "#221F1A", muted: "#6B675F" },
+              berry: "#8E3B46",
+            },
+            fontFamily: {
+              sans: ["Inter", "ui-sans-serif", "system-ui", "sans-serif"],
+              display: ['"Fraunces"', "Georgia", "serif"],
+            },
+          },
+        },
+      };
+    </script>
+
+    <style>
+      body {
+        -webkit-font-smoothing: antialiased;
+        text-rendering: optimizeLegibility;
+      }
+      a:focus-visible,
+      button:focus-visible,
+      input:focus-visible,
+      select:focus-visible,
+      textarea:focus-visible,
+      summary:focus-visible {
+        outline: 2px solid #2c4a34;
+        outline-offset: 3px;
+        border-radius: 2px;
+      }
+      .field {
+        width: 100%;
+        border-radius: 2px;
+        border: 1px solid #e5dfd3;
+        background: #ffffff;
+        padding: 0.75rem 1rem;
+        font-size: 0.875rem;
+        color: #221f1a;
+        transition: border-color 0.15s ease-out;
+      }
+      .field:focus {
+        outline: none;
+        border-color: #2c4a34;
+      }
+      .field.invalid {
+        border-color: #8e3b46;
+        background: #fdf6f6;
+      }
+    </style>
+  </head>
+
+  <body
+    data-page="checkout.html"
+    class="flex min-h-screen flex-col bg-cream font-sans text-ink antialiased"
+  >
+    <main class="flex-1">
+      <div class="mx-auto max-w-6xl px-4 py-10 sm:px-6 sm:py-14">
+        <p class="text-xs font-semibold uppercase tracking-[0.18em] text-muted">Last step</p>
+        <h1 class="mt-3 font-display text-4xl font-semibold tracking-tight text-ink sm:text-5xl">
+          Checkout
+        </h1>
+
+        <!-- Step indicator -->
+        <ol id="steps" class="mt-8 flex flex-wrap items-center gap-2 text-sm" aria-label="Checkout steps">
+          <li data-step="1" class="flex items-center gap-2">
+            <span class="flex h-7 w-7 items-center justify-center rounded-full bg-forest font-display text-xs font-semibold text-cream">1</span>
+            <span class="font-medium text-ink">Contact</span>
+          </li>
+          <li class="h-px w-6 bg-line" aria-hidden="true"></li>
+          <li data-step="2" class="flex items-center gap-2">
+            <span class="flex h-7 w-7 items-center justify-center rounded-full border border-line bg-white font-display text-xs font-semibold text-muted">2</span>
+            <span class="text-muted">Delivery</span>
+          </li>
+          <li class="h-px w-6 bg-line" aria-hidden="true"></li>
+          <li data-step="3" class="flex items-center gap-2">
+            <span class="flex h-7 w-7 items-center justify-center rounded-full border border-line bg-white font-display text-xs font-semibold text-muted">3</span>
+            <span class="text-muted">Payment</span>
+          </li>
+        </ol>
+
+        <div id="checkout-body" class="mt-10 grid gap-10 lg:grid-cols-[3fr,2fr] lg:gap-14">
+          <form id="co-form" novalidate class="min-w-0">
+            <!-- Empty basket notice -->
+            <div id="co-empty" class="hidden rounded-md border border-line bg-white px-6 py-14 text-center">
+              <p class="font-display text-xl font-semibold text-ink">There is nothing to check out</p>
+              <p class="mx-auto mt-2 max-w-md text-sm leading-relaxed text-muted">
+                Your basket is empty &mdash; fill it first and the checkout will
+                be waiting.
+              </p>
+              <a href="shop.html" class="mt-5 inline-flex rounded-sm bg-forest px-5 py-2.5 text-sm font-semibold text-cream transition hover:bg-forest-dark">Browse the market</a>
+            </div>
+
+            <!-- STEP 1: contact -->
+            <fieldset id="step-1" class="rounded-md border border-line bg-white p-6 sm:p-8">
+              <legend class="px-1 font-display text-lg font-semibold text-ink">1 &mdash; Your details</legend>
+              <p class="mt-2 text-sm leading-relaxed text-muted">No account needed &mdash; this is a guest checkout. We only use these to deliver your box and send the confirmation.</p>
+              <div class="mt-6 grid gap-5 sm:grid-cols-2">
+                <div class="sm:col-span-2">
+                  <label for="f-name" class="block text-xs font-semibold uppercase tracking-[0.12em] text-ink">Full name <span class="text-berry" aria-hidden="true">*</span></label>
+                  <input id="f-name" name="name" type="text" required autocomplete="name" placeholder="Jane Rossi" class="field mt-2.5" />
+                  <p class="err mt-1.5 hidden text-xs text-berry">Please tell us your name.</p>
+                </div>
+                <div>
+                  <label for="f-email" class="block text-xs font-semibold uppercase tracking-[0.12em] text-ink">Email <span class="text-berry" aria-hidden="true">*</span></label>
+                  <input id="f-email" name="email" type="email" required autocomplete="email" placeholder="you@example.com" class="field mt-2.5" />
+                  <p class="err mt-1.5 hidden text-xs text-berry">That email does not look right.</p>
+                </div>
+                <div>
+                  <label for="f-phone" class="block text-xs font-semibold uppercase tracking-[0.12em] text-ink">Phone <span class="text-berry" aria-hidden="true">*</span></label>
+                  <input id="f-phone" name="phone" type="tel" required autocomplete="tel" placeholder="(905) 555-0123" class="field mt-2.5" />
+                  <p class="err mt-1.5 hidden text-xs text-berry">The driver may need to call at the door.</p>
+                </div>
+              </div>
+              <div class="mt-7 flex justify-end">
+                <button type="button" id="next-1" class="rounded-sm bg-forest px-7 py-3.5 text-sm font-semibold text-cream transition hover:-translate-y-px hover:bg-forest-dark">
+                  Continue to delivery &rarr;
+                </button>
+              </div>
+            </fieldset>
+
+            <!-- STEP 2: delivery or pickup -->
+            <fieldset id="step-2" class="mt-6 hidden rounded-md border border-line bg-white p-6 sm:p-8">
+              <legend class="px-1 font-display text-lg font-semibold text-ink">2 &mdash; Delivery or pickup</legend>
+              <p class="mt-2 text-sm leading-relaxed text-muted">Order by 11 a.m. and the van brings it the next morning &mdash; or pick it up at the stand for free.</p>
+
+              <div class="mt-6 grid gap-4 sm:grid-cols-2">
+                <label class="mode-option flex cursor-pointer items-start gap-3 rounded-sm border border-line px-4 py-3.5 has-[:checked]:border-forest has-[:checked]:bg-forest-soft">
+                  <input type="radio" name="mode" id="mode-delivery" value="delivery" class="mt-1 accent-[#2C4A34]" checked />
+                  <span>
+                    <span class="block font-display text-sm font-semibold text-ink">Delivery &mdash; next morning</span>
+                    <span class="mt-0.5 block text-xs text-muted">Flat $7.95, free over $60, anywhere in Niagara</span>
+                  </span>
+                </label>
+                <label class="mode-option flex cursor-pointer items-start gap-3 rounded-sm border border-line px-4 py-3.5 has-[:checked]:border-forest has-[:checked]:bg-forest-soft">
+                  <input type="radio" name="mode" id="mode-pickup" value="pickup" class="mt-1 accent-[#2C4A34]" />
+                  <span>
+                    <span class="block font-display text-sm font-semibold text-ink">Pickup at the farm stand &mdash; free</span>
+                    <span class="mt-0.5 block text-xs text-muted">429 Orchard Lane, Thu&ndash;Sun 9&ndash;4</span>
+                  </span>
+                </label>
+              </div>
+
+              <!-- Delivery address (shown for delivery) -->
+              <div id="addr-block" class="mt-6 grid gap-5 sm:grid-cols-2">
+                <div class="sm:col-span-2">
+                  <label for="f-street" class="block text-xs font-semibold uppercase tracking-[0.12em] text-ink">Street address <span class="text-berry" aria-hidden="true">*</span></label>
+                  <input id="f-street" name="street" type="text" autocomplete="street-address" placeholder="123 Geneva St, Apt 4" class="field mt-2.5" />
+                  <p class="err mt-1.5 hidden text-xs text-berry">The driver needs a street address.</p>
+                </div>
+                <div>
+                  <label for="f-city" class="block text-xs font-semibold uppercase tracking-[0.12em] text-ink">Town <span class="text-berry" aria-hidden="true">*</span></label>
+                  <select id="f-city" name="city" class="field mt-2.5">
+                    <option value="">Choose your town&hellip;</option>
+                    <option>St. Catharines</option>
+                    <option>Niagara Falls</option>
+                    <option>Welland</option>
+                    <option>Niagara-on-the-Lake</option>
+                    <option>Thorold</option>
+                    <option>Grimsby</option>
+                    <option>Fort Erie</option>
+                    <option>Lincoln / Beamsville</option>
+                    <option>West Lincoln / Smithville</option>
+                  </select>
+                  <p class="err mt-1.5 hidden text-xs text-berry">Pick your town so the route is right.</p>
+                </div>
+                <div>
+                  <label for="f-postal" class="block text-xs font-semibold uppercase tracking-[0.12em] text-ink">Postal code <span class="text-berry" aria-hidden="true">*</span></label>
+                  <input id="f-postal" name="postal" type="text" autocomplete="postal-code" placeholder="L2R 3E1" class="field mt-2.5 uppercase" />
+                  <p class="err mt-1.5 hidden text-xs text-berry">A Canadian postal code looks like L2R 3E1.</p>
+                </div>
+                <div class="sm:col-span-2">
+                  <label for="f-notes" class="block text-xs font-semibold uppercase tracking-[0.12em] text-ink">Delivery notes <span class="font-normal normal-case tracking-normal text-muted">(optional)</span></label>
+                  <textarea id="f-notes" name="notes" rows="2" placeholder="Gate code, leave with the neighbour, buzzer 12&hellip;" class="field mt-2.5"></textarea>
+                </div>
+              </div>
+
+              <!-- Pickup note (shown for pickup) -->
+              <div id="pickup-block" class="mt-6 hidden rounded-sm border border-line bg-cream px-4 py-3.5 text-sm leading-relaxed text-muted">
+                Your box waits in the cold room with your name on it, Thursday to
+                Sunday, 9 a.m. to 4 p.m. at <strong class="text-ink">429 Orchard
+                Lane</strong> (a fictional address &mdash; this is a demo store).
+                Bring a bag; we do not do plastic.
+              </div>
+
+              <div class="mt-7 flex flex-wrap items-center justify-between gap-3">
+                <button type="button" id="back-2" class="text-sm font-semibold text-muted underline-offset-4 transition hover:text-ink hover:underline">&larr; Back</button>
+                <button type="button" id="next-2" class="rounded-sm bg-forest px-7 py-3.5 text-sm font-semibold text-cream transition hover:-translate-y-px hover:bg-forest-dark">
+                  Continue to payment &rarr;
+                </button>
+              </div>
+            </fieldset>
+
+            <!-- STEP 3: payment -->
+            <fieldset id="step-3" class="mt-6 hidden rounded-md border border-line bg-white p-6 sm:p-8">
+              <legend class="px-1 font-display text-lg font-semibold text-ink">3 &mdash; Payment</legend>
+              <p class="mt-2 text-sm leading-relaxed text-muted">
+                This is a demo checkout, so nothing is charged here &mdash; the
+                order is settled at the door or on pickup.
+              </p>
+
+              <div class="mt-6 space-y-3">
+                <label class="pay-option flex cursor-pointer items-start gap-3 rounded-sm border border-line px-4 py-3.5 has-[:checked]:border-forest has-[:checked]:bg-forest-soft">
+                  <input type="radio" name="payment" value="card" class="mt-1 accent-[#2C4A34]" checked />
+                  <span>
+                    <span class="block font-display text-sm font-semibold text-ink">Card at the door</span>
+                    <span class="mt-0.5 block text-xs text-muted">Tap on the driver&rsquo;s reader &mdash; debit or credit</span>
+                  </span>
+                </label>
+                <label class="pay-option flex cursor-pointer items-start gap-3 rounded-sm border border-line px-4 py-3.5 has-[:checked]:border-forest has-[:checked]:bg-forest-soft">
+                  <input type="radio" name="payment" value="cash" class="mt-1 accent-[#2C4A34]" />
+                  <span>
+                    <span class="block font-display text-sm font-semibold text-ink">Cash at the door</span>
+                    <span class="mt-0.5 block text-xs text-muted">The driver carries change</span>
+                  </span>
+                </label>
+                <label class="pay-option flex cursor-pointer items-start gap-3 rounded-sm border border-line px-4 py-3.5 has-[:checked]:border-forest has-[:checked]:bg-forest-soft">
+                  <input type="radio" name="payment" value="etransfer" class="mt-1 accent-[#2C4A34]" />
+                  <span>
+                    <span class="block font-display text-sm font-semibold text-ink">Interac e-Transfer</span>
+                    <span class="mt-0.5 block text-xs text-muted">We email the details with your confirmation</span>
+                  </span>
+                </label>
+              </div>
+
+              <!-- 19+ confirmation: shown only when alcohol is in the basket -->
+              <div id="age-block" class="mt-6 hidden rounded-sm border border-berry/40 bg-berry/5 px-4 py-3.5">
+                <label class="flex cursor-pointer items-start gap-3 text-sm leading-relaxed text-ink">
+                  <input type="checkbox" id="f-age" class="mt-0.5 accent-[#8E3B46]" />
+                  <span>I am 19 or older &mdash; I understand the driver checks ID for cider at the door. <span class="text-berry" aria-hidden="true">*</span></span>
+                </label>
+                <p id="age-err" class="err mt-2 hidden text-xs text-berry">Alcohol rides only with a 19+ confirmation.</p>
+              </div>
+
+              <div class="mt-7 flex flex-wrap items-center justify-between gap-3">
+                <button type="button" id="back-3" class="text-sm font-semibold text-muted underline-offset-4 transition hover:text-ink hover:underline">&larr; Back</button>
+                <button
+                  type="submit"
+                  id="place-order"
+                  class="rounded-sm bg-forest px-7 py-3.5 text-sm font-semibold text-cream transition hover:-translate-y-px hover:bg-forest-dark"
+                >
+                  Place order &mdash; <span id="place-total"></span>
+                </button>
+              </div>
+              <p class="mt-4 text-xs leading-relaxed text-muted">
+                By placing this order you agree to be contacted about it &mdash;
+                and nothing else. No account is created and no card number is
+                ever asked for on this site.
+              </p>
+            </fieldset>
+          </form>
+
+          <!-- Order summary -->
+          <div class="h-fit rounded-md border border-line bg-white p-6 sm:p-7 lg:sticky lg:top-32">
+            <h2 class="font-display text-lg font-semibold tracking-tight text-ink">Your order</h2>
+            <div id="sum-lines" class="mt-5 max-h-72 space-y-3 overflow-y-auto pr-1"></div>
+            <dl class="mt-5 space-y-3 border-t border-line pt-5 text-sm">
+              <div class="flex items-baseline justify-between gap-4">
+                <dt class="text-muted">Subtotal</dt>
+                <dd id="c-sub" class="font-display text-base font-semibold text-ink"></dd>
+              </div>
+              <div id="c-disc-row" class="hidden flex items-baseline justify-between gap-4">
+                <dt class="text-muted">Discount <span id="c-promo" class="font-medium text-forest"></span></dt>
+                <dd id="c-disc" class="font-display text-base font-semibold text-forest"></dd>
+              </div>
+              <div class="flex items-baseline justify-between gap-4">
+                <dt class="text-muted"><span id="c-ship-label">Delivery</span></dt>
+                <dd id="c-ship" class="font-medium text-ink"></dd>
+              </div>
+              <div class="flex items-baseline justify-between gap-4">
+                <dt class="text-muted">HST (13%)</dt>
+                <dd id="c-tax" class="font-medium text-ink"></dd>
+              </div>
+              <div class="flex items-baseline justify-between gap-4 border-t border-line pt-4">
+                <dt class="font-display text-base font-semibold text-ink">Total</dt>
+                <dd id="c-total" class="font-display text-2xl font-bold text-ink"></dd>
+              </div>
+            </dl>
+            <p class="mt-4 flex items-start gap-2 text-xs leading-relaxed text-muted">
+              <svg class="mt-0.5 h-4 w-4 shrink-0 text-forest" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              Nothing is charged on this site. Payment happens at the door or on
+              pickup &mdash; this whole checkout is a portfolio demonstration.
+            </p>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <script src="products.js"></script>
+    <script src="store.js"></script>
+    <script>
+      /* Checkout: three steps, live validation, live order summary and
+         order placement. No payment is collected — the demo order is stored
+         locally and confirmed on the next page. */
+      (function () {
+        "use strict";
+        var ALCOHOL = { "icewine-cider": true, "sparkling-4pk": true };
+        var form = document.getElementById("co-form");
+        var hasItems = Store.lines().length > 0;
+        var step = 1;
+
+        /* Empty basket: show the notice, hide the whole flow. */
+        if (!hasItems) {
+          document.getElementById("co-empty").classList.remove("hidden");
+          ["step-1", "step-2", "step-3"].forEach(function (id) {
+            document.getElementById(id).classList.add("hidden");
+          });
+          var bodyEl = document.getElementById("checkout-body");
+          bodyEl.children[1].classList.add("hidden");
+          document.getElementById("steps").classList.add("hidden");
+        }
+
+        function mode() {
+          return document.getElementById("mode-delivery").checked ? "delivery" : "pickup";
+        }
+
+        function setErr(input, show) {
+          input.classList.toggle("invalid", show);
+          var p = input.parentElement.querySelector(".err");
+          if (p) p.classList.toggle("hidden", !show);
+        }
+
+        function validate(ids) {
+          var ok = true;
+          ids.forEach(function (id) {
+            var el = document.getElementById(id);
+            var v = el.value.trim();
+            var good;
+            if (id === "f-email") good = /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v);
+            else if (id === "f-postal") good = /^[A-Za-z]\d[A-Za-z][ -]?\d[A-Za-z]\d$/.test(v);
+            else good = v !== "";
+            setErr(el, !good);
+            if (!good) ok = false;
+          });
+          return ok;
+        }
+
+        function paintSteps() {
+          Array.prototype.forEach.call(document.querySelectorAll("#steps li[data-step]"), function (li) {
+            var n = parseInt(li.getAttribute("data-step"), 10);
+            var dot = li.querySelector("span");
+            var label = li.querySelectorAll("span")[1];
+            var done = n <= step;
+            dot.className = "flex h-7 w-7 items-center justify-center rounded-full font-display text-xs font-semibold " +
+              (done ? "bg-forest text-cream" : "border border-line bg-white text-muted");
+            label.className = done ? "font-medium text-ink" : "text-muted";
+          });
+        }
+
+        function showStep(n) {
+          step = n;
+          ["step-1", "step-2", "step-3"].forEach(function (id, i) {
+            document.getElementById(id).classList.toggle("hidden", i + 1 !== n || !hasItems);
+          });
+          paintSteps();
+          window.scrollTo(0, 0);
+        }
+
+        document.getElementById("next-1").addEventListener("click", function () {
+          if (validate(["f-name", "f-email", "f-phone"])) showStep(2);
+        });
+        document.getElementById("next-2").addEventListener("click", function () {
+          if (mode() === "delivery") {
+            if (!validate(["f-street", "f-city", "f-postal"])) return;
+          }
+          showStep(3);
+        });
+        document.getElementById("back-2").addEventListener("click", function () { showStep(1); });
+        document.getElementById("back-3").addEventListener("click", function () { showStep(2); });
+
+        Array.prototype.forEach.call(form.querySelectorAll('input[name="mode"]'), function (r) {
+          r.addEventListener("change", function () {
+            var delivery = mode() === "delivery";
+            document.getElementById("addr-block").classList.toggle("hidden", !delivery);
+            document.getElementById("pickup-block").classList.toggle("hidden", delivery);
+            renderSummary();
+          });
+        });
+
+        function renderSummary() {
+          var ls = Store.lines();
+          document.getElementById("sum-lines").innerHTML = ls
+            .map(function (l) {
+              return (
+                '<div class="flex items-center gap-3">' +
+                '<span class="block h-12 w-12 shrink-0 overflow-hidden rounded-sm">' + Store.art(l.p) + "</span>" +
+                '<span class="min-w-0 flex-1">' +
+                '<span class="block truncate text-sm font-medium text-ink">' + Store.esc(l.p.name) + "</span>" +
+                '<span class="block text-xs text-muted">' + (l.variant ? Store.esc(l.variant.name) + " &middot; " : "") + "&times; " + l.q + "</span>" +
+                "</span>" +
+                '<span class="text-sm font-semibold text-ink">' + Store.fmt(l.total) + "</span>" +
+                "</div>"
+              );
+            })
+            .join("");
+
+          var t = Store.totals(mode());
+          document.getElementById("c-sub").textContent = Store.fmt(t.sub);
+          document.getElementById("c-disc").textContent = "-" + Store.fmt(t.discount);
+          document.getElementById("c-disc-row").classList.toggle("hidden", !t.promo || t.discount === 0);
+          document.getElementById("c-promo").textContent = t.promo ? "(" + Store.getPromo().toUpperCase() + ")" : "";
+          document.getElementById("c-ship-label").textContent = mode() === "pickup" ? "Pickup" : "Delivery";
+          document.getElementById("c-ship").textContent = t.shipping === 0 ? "Free" : Store.fmt(t.shipping);
+          document.getElementById("c-tax").textContent = Store.fmt(t.tax);
+          document.getElementById("c-total").textContent = Store.fmt(t.total);
+          document.getElementById("place-total").textContent = Store.fmt(t.total);
+
+          /* The 19+ checkbox only appears when alcohol is on board. */
+          var hasAlcohol = ls.some(function (l) { return ALCOHOL[l.p.id]; });
+          document.getElementById("age-block").classList.toggle("hidden", !hasAlcohol);
+        }
+
+        form.addEventListener("submit", function (e) {
+          e.preventDefault();
+          if (!hasItems || step !== 3) return;
+
+          var contactOk = validate(["f-name", "f-email", "f-phone"]);
+          var addrOk = mode() === "pickup" || validate(["f-street", "f-city", "f-postal"]);
+          var ageEl = document.getElementById("f-age");
+          var ageOk = !document.getElementById("age-block").classList.contains("hidden") ? ageEl.checked : true;
+          document.getElementById("age-err").classList.toggle("hidden", ageOk);
+
+          if (!contactOk) { showStep(1); return; }
+          if (!addrOk) { showStep(2); return; }
+          if (!ageOk) { return; }
+
+          var pay = form.querySelector('input[name="payment"]:checked').value;
+          var order = {
+            mode: mode(),
+            name: document.getElementById("f-name").value.trim(),
+            email: document.getElementById("f-email").value.trim(),
+            phone: document.getElementById("f-phone").value.trim(),
+            street: document.getElementById("f-street").value.trim(),
+            city: document.getElementById("f-city").value,
+            postal: document.getElementById("f-postal").value.trim().toUpperCase(),
+            notes: document.getElementById("f-notes").value.trim(),
+            payment: pay,
+            ageOk: ageOk,
+          };
+          Store.placeOrder(order);
+          location.href = "order-confirmed.html";
+        });
+
+        renderSummary();
+        paintSteps();
+      })();
+    </script>
+  </body>
+</html>
+
+
+
+
+

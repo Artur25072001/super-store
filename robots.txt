@@ -1,0 +1,37 @@
+# Demo/preview site - a fictional business used as a portfolio sample by
+# Artur Dymchevskyi. It is not a real company, and no address, phone number,
+# price, review or testimonial on it describes a real business. No payment
+# is ever collected anywhere on this site; the checkout is a demonstration.
+#
+# Crawling is deliberately left open. Every page carries a "noindex" directive
+# in its <head>, and search engines can only honour that directive if they are
+# allowed to fetch the page. Blocking the crawl instead would leave the URLs
+# eligible to appear in results as "indexed, though blocked by robots.txt".
+User-agent: *
+Allow: /
+
+# AI training, archiving and bulk-scraping crawlers are not welcome on demo
+# content. These groups override the wildcard group above.
+User-agent: GPTBot
+Disallow: /
+
+User-agent: ChatGPT-User
+Disallow: /
+
+User-agent: Google-Extended
+Disallow: /
+
+User-agent: CCBot
+Disallow: /
+
+User-agent: ClaudeBot
+Disallow: /
+
+User-agent: anthropic-ai
+Disallow: /
+
+User-agent: PerplexityBot
+Disallow: /
+
+User-agent: Bytespider
+Disallow: /

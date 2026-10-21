@@ -1,0 +1,13 @@
+# Editor and tooling state - never part of the deployed site.
+.vscode/
+.kilo/
+.kilocode/
+.idea/
+
+# OS clutter
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Node dependencies (the QA harness lives outside this repo)
+node_modules/

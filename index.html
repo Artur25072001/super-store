@@ -1,0 +1,518 @@
+<!doctype html>
+<html lang="en-CA">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- Demo/preview site: a fictional business used as a portfolio sample by
+         Artur Dymchevskyi. It is not a real company and no payment is ever
+         collected here; the checkout is a demonstration. The "noindex"
+         directive below is what keeps these pages out of search results;
+         see robots.txt and _headers. -->
+    <meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex" />
+    <meta
+      name="description"
+      content="Orchard Lane Provisions — jams, honey, fresh-baked bread, cider and flowers from Niagara farms, ordered online and delivered next day. A demo online store built as a portfolio sample."
+    />
+    <meta property="og:title" content="Orchard Lane Provisions — Niagara Farm Market, Delivered Next Day" />
+    <meta
+      property="og:description"
+      content="The farm market, open on your phone: shop jams, honey, bakery, cider and flowers with next-day delivery across Niagara."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="/favicon.svg" />
+    <meta property="og:locale" content="en_CA" />
+    <meta property="og:site_name" content="Orchard Lane Provisions" />
+    <title>Orchard Lane Provisions — Niagara Farm Market, Delivered Next Day</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500..700&family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              forest: { DEFAULT: "#2C4A34", dark: "#223A29", soft: "#E8EEE6" },
+              honey: { DEFAULT: "#C6813F", dark: "#A86427", soft: "#F5E9D7" },
+              cream: "#FAF6EF",
+              line: "#E5DFD3",
+              ink: { DEFAULT: "#221F1A", muted: "#6B675F" },
+              berry: "#8E3B46",
+            },
+            fontFamily: {
+              sans: ["Inter", "ui-sans-serif", "system-ui", "sans-serif"],
+              display: ['"Fraunces"', "Georgia", "serif"],
+            },
+          },
+        },
+      };
+    </script>
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "CreativeWork",
+        "name": "Orchard Lane Provisions",
+        "description": "A demo online farm-market store built as a portfolio sample by Artur Dymchevskyi. The business, its products, prices, ratings, reviews and checkout are all fictional, no payment is ever collected, and this page is deliberately kept out of search results.",
+        "genre": "Website design demo — e-commerce",
+        "inLanguage": "en-CA",
+        "creator": {
+          "@type": "Person",
+          "name": "Artur Dymchevskyi",
+          "jobTitle": "Fullstack Developer",
+          "email": "arturdymschevskyi@gmail.com",
+          "url": "https://github.com/Artur25072001"
+        }
+      }
+    </script>
+
+    <style>
+      body {
+        -webkit-font-smoothing: antialiased;
+        text-rendering: optimizeLegibility;
+      }
+      [id] {
+        scroll-margin-top: 6rem;
+      }
+      a:focus-visible,
+      button:focus-visible,
+      input:focus-visible,
+      select:focus-visible,
+      textarea:focus-visible,
+      summary:focus-visible {
+        outline: 2px solid #2c4a34;
+        outline-offset: 3px;
+        border-radius: 2px;
+      }
+    </style>
+  </head>
+
+  <body
+    data-page="index.html"
+    class="flex min-h-screen flex-col bg-cream font-sans text-ink antialiased"
+  >
+    <main class="flex-1">
+      <!-- ============ HERO ============ -->
+      <section class="border-b border-line">
+        <div
+          class="mx-auto grid max-w-6xl items-center gap-12 px-4 py-14 sm:px-6 sm:py-20 lg:grid-cols-2 lg:gap-16"
+        >
+          <div>
+            <p
+              class="inline-flex items-center gap-2 rounded-full border border-forest/20 bg-forest-soft px-3.5 py-1.5 text-xs font-semibold uppercase tracking-[0.14em] text-forest-dark"
+            >
+              Niagara farm market &middot; online
+            </p>
+            <h1
+              class="mt-5 font-display text-4xl font-semibold leading-[1.08] tracking-tight sm:text-5xl"
+            >
+              The farm market,
+              <span class="italic text-forest">open on your phone.</span>
+            </h1>
+            <p class="mt-5 max-w-xl text-lg leading-relaxed text-muted">
+              Jams from the patch, honey from the hives, bread baked the morning
+              it ships, and flowers cut an hour before the van leaves. Order by
+              11 a.m. and it is on your step tomorrow, anywhere in Niagara.
+            </p>
+            <div class="mt-8 flex flex-wrap items-center gap-3">
+              <a
+                href="shop.html"
+                class="rounded-sm bg-forest px-7 py-3.5 text-sm font-semibold text-cream transition hover:-translate-y-px hover:bg-forest-dark"
+                >Shop the market</a
+              >
+              <a
+                href="#how"
+                class="rounded-sm border border-forest px-7 py-3.5 text-sm font-semibold text-forest transition hover:-translate-y-px hover:bg-forest hover:text-cream"
+                >How ordering works</a
+              >
+            </div>
+            <dl class="mt-10 grid max-w-md grid-cols-3 gap-4">
+              <div>
+                <dt class="font-display text-2xl font-bold text-ink">24</dt>
+                <dd class="text-xs text-muted">pantry staples</dd>
+              </div>
+              <div>
+                <dt class="font-display text-2xl font-bold text-ink">Next day</dt>
+                <dd class="text-xs text-muted">across Niagara</dd>
+              </div>
+              <div>
+                <dt class="font-display text-2xl font-bold text-ink">$60</dt>
+                <dd class="text-xs text-muted">free delivery over</dd>
+              </div>
+            </dl>
+          </div>
+          <div
+            id="hero-art"
+            class="mx-auto grid w-full max-w-md grid-cols-2 gap-4 sm:gap-5"
+          ></div>
+        </div>
+      </section>
+
+      <!-- ============ CATEGORIES ============ -->
+      <section class="border-b border-line bg-white">
+        <div class="mx-auto max-w-6xl px-4 py-14 sm:px-6 sm:py-16">
+          <div class="flex flex-wrap items-end justify-between gap-3">
+            <div>
+              <h2 class="font-display text-3xl font-semibold tracking-tight text-ink sm:text-4xl">
+                Six shelves of the market
+              </h2>
+              <p class="mt-3 max-w-xl text-base leading-relaxed text-muted">
+                Everything on them is made, grown or baked by the small crew
+                behind this store &mdash; nothing is resold.
+              </p>
+            </div>
+            <a href="shop.html" class="text-sm font-semibold text-forest underline-offset-4 transition hover:underline">
+              Browse everything &rarr;</a>
+          </div>
+          <div id="cat-tiles" class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3"></div>
+        </div>
+      </section>
+
+      <!-- ============ BESTSELLERS ============ -->
+      <section class="border-b border-line">
+        <div class="mx-auto max-w-6xl px-4 py-14 sm:px-6 sm:py-16">
+          <div class="flex flex-wrap items-end justify-between gap-3">
+            <div>
+              <h2 class="font-display text-3xl font-semibold tracking-tight text-ink sm:text-4xl">
+                Most loved this week
+              </h2>
+              <p class="mt-3 max-w-xl text-base leading-relaxed text-muted">
+                Ranked by the order the market packs them in &mdash; the eight
+                things that keep disappearing first.
+              </p>
+            </div>
+            <a href="shop.html" class="text-sm font-semibold text-forest underline-offset-4 transition hover:underline">
+              See all 24 &rarr;</a>
+          </div>
+          <div id="bestseller-grid" class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4"></div>
+        </div>
+      </section>
+
+      <!-- ============ HOW ORDERING WORKS ============ -->
+      <section id="how" class="border-b border-line bg-white">
+        <div class="mx-auto max-w-6xl px-4 py-14 sm:px-6 sm:py-16">
+          <h2 class="font-display text-3xl font-semibold tracking-tight text-ink sm:text-4xl">
+            How ordering works
+          </h2>
+          <p class="mt-3 max-w-xl text-base leading-relaxed text-muted">
+            No account, no subscription, no minimum &mdash; three steps and the
+            van does the rest.
+          </p>
+          <ol class="mt-10 grid gap-8 md:grid-cols-3">
+            <li class="rounded-md border border-line bg-cream p-6">
+              <span class="flex h-9 w-9 items-center justify-center rounded-full bg-forest font-display text-sm font-semibold text-cream">1</span>
+              <h3 class="mt-4 font-display text-lg font-semibold text-ink">Fill your basket by 11 a.m.</h3>
+              <p class="mt-2 text-sm leading-relaxed text-muted">
+                Shop the shelves, apply a code if you have one, and check out
+                as a guest. Bread orders close Thursday evening for the
+                weekend bake.
+              </p>
+            </li>
+            <li class="rounded-md border border-line bg-cream p-6">
+              <span class="flex h-9 w-9 items-center justify-center rounded-full bg-forest font-display text-sm font-semibold text-cream">2</span>
+              <h3 class="mt-4 font-display text-lg font-semibold text-ink">We pack the morning boxes</h3>
+              <p class="mt-2 text-sm leading-relaxed text-muted">
+                The bakery runs at 5 a.m., the flowers are cut at 7, and your
+                box is packed the same morning &mdash; nothing sits in a
+                warehouse.
+              </p>
+            </li>
+            <li class="rounded-md border border-line bg-cream p-6">
+              <span class="flex h-9 w-9 items-center justify-center rounded-full bg-forest font-display text-sm font-semibold text-cream">3</span>
+              <h3 class="mt-4 font-display text-lg font-semibold text-ink">On your step the next morning</h3>
+              <p class="mt-2 text-sm leading-relaxed text-muted">
+                Delivery is a flat $7.95 anywhere in Niagara, free over $60
+                &mdash; or pick it up at the farm stand, free, any day we are
+                open.
+              </p>
+            </li>
+          </ol>
+          <div class="mt-10 grid gap-4 rounded-md border border-line bg-forest-soft p-6 sm:grid-cols-2 sm:p-8">
+            <div class="flex items-start gap-3.5">
+              <span class="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-sm bg-white text-forest">
+                <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M3 7h13v10H3zM16 10h3l2 3v4h-5"/><circle cx="7" cy="18" r="1.8"/><circle cx="17.5" cy="18" r="1.8"/>
+                </svg>
+              </span>
+              <p class="text-sm leading-relaxed text-ink">
+                <strong class="font-display">Delivery</strong> &mdash; flat
+                $7.95, free over $60, next morning across the Niagara Region:
+                St.&nbsp;Catharines, Niagara Falls, Welland,
+                Niagara-on-the-Lake, Thorold, Grimsby and Fort Erie.
+              </p>
+            </div>
+            <div class="flex items-start gap-3.5">
+              <span class="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-sm bg-white text-forest">
+                <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M4 10 12 4l8 6v9a1 1 0 0 1-1 1h-4v-6H9v6H5a1 1 0 0 1-1-1z"/>
+                </svg>
+              </span>
+              <p class="text-sm leading-relaxed text-ink">
+                <strong class="font-display">Pickup</strong> &mdash; free at
+                the farm stand, 429&nbsp;Orchard&nbsp;Lane (a fictional
+                address), Thursday to Sunday 9&ndash;4. Your order waits in
+                the cold room with your name on the box.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ WHY THIS MARKET ============ -->
+      <section class="border-b border-line">
+        <div class="mx-auto grid max-w-6xl gap-6 px-4 py-14 sm:grid-cols-2 sm:px-6 sm:py-16 lg:grid-cols-4">
+          <div>
+            <h3 class="font-display text-base font-semibold text-ink">Baked the morning it ships</h3>
+            <p class="mt-2 text-sm leading-relaxed text-muted">Bread and buns never see a freezer, and there is no yesterday loaf on the shelf.</p>
+          </div>
+          <div>
+            <h3 class="font-display text-base font-semibold text-ink">Straight from the growers</h3>
+            <p class="mt-2 text-sm leading-relaxed text-muted">The fruit, the hives, the sap and the blooms all come off the same two hundred acres.</p>
+          </div>
+          <div>
+            <h3 class="font-display text-base font-semibold text-ink">Honest money maths</h3>
+            <p class="mt-2 text-sm leading-relaxed text-muted">Flat delivery, free over $60, HST shown at checkout &mdash; no surprises on the last screen.</p>
+          </div>
+          <div>
+            <h3 class="font-display text-base font-semibold text-ink">Sorted if something is wrong</h3>
+            <p class="mt-2 text-sm leading-relaxed text-muted">A cracked jar or a sad bouquet is replaced or refunded, no photo essays required.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ REVIEWS ============ -->
+      <section class="border-b border-line bg-white">
+        <div class="mx-auto max-w-6xl px-4 py-14 sm:px-6 sm:py-16">
+          <h2 class="font-display text-3xl font-semibold tracking-tight text-ink sm:text-4xl">
+            What the regulars say
+          </h2>
+          <p class="mt-3 max-w-xl text-base leading-relaxed text-muted">
+            Three of this week&rsquo;s notes &mdash; like everything else on
+            this site, written for a made-up market.
+          </p>
+          <div class="mt-10 grid gap-6 md:grid-cols-3">
+            <figure class="rounded-md border border-line bg-cream p-6">
+              <div class="flex gap-0.5 text-honey" aria-hidden="true">
+                <svg class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.26L21.5 9.3l-4.75 4.63 1.13 6.57L12 17.4l-5.88 3.1 1.13-6.57L2.5 9.3l6.6-1.04L12 2z"/></svg>
+                <svg class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.26L21.5 9.3l-4.75 4.63 1.13 6.57L12 17.4l-5.88 3.1 1.13-6.57L2.5 9.3l6.6-1.04L12 2z"/></svg>
+                <svg class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.26L21.5 9.3l-4.75 4.63 1.13 6.57L12 17.4l-5.88 3.1 1.13-6.57L2.5 9.3l6.6-1.04L12 2z"/></svg>
+                <svg class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.26L21.5 9.3l-4.75 4.63 1.13 6.57L12 17.4l-5.88 3.1 1.13-6.57L2.5 9.3l6.6-1.04L12 2z"/></svg>
+                <svg class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.26L21.5 9.3l-4.75 4.63 1.13 6.57L12 17.4l-5.88 3.1 1.13-6.57L2.5 9.3l6.6-1.04L12 2z"/></svg>
+              </div>
+              <blockquote class="mt-4 font-display text-lg italic leading-relaxed text-ink">
+                &ldquo;The sourdough arrives still smelling like the bakery.
+                I have stopped buying bread anywhere else on Saturdays.&rdquo;
+              </blockquote>
+              <figcaption class="mt-4 text-sm text-muted">Marta W. &mdash; St. Catharines</figcaption>
+            </figure>
+            <figure class="rounded-md border border-line bg-cream p-6">
+              <div class="flex gap-0.5 text-honey" aria-hidden="true">
+                <svg class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.26L21.5 9.3l-4.75 4.63 1.13 6.57L12 17.4l-5.88 3.1 1.13-6.57L2.5 9.3l6.6-1.04L12 2z"/></svg>
+                <svg class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.26L21.5 9.3l-4.75 4.63 1.13 6.57L12 17.4l-5.88 3.1 1.13-6.57L2.5 9.3l6.6-1.04L12 2z"/></svg>
+                <svg class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.26L21.5 9.3l-4.75 4.63 1.13 6.57L12 17.4l-5.88 3.1 1.13-6.57L2.5 9.3l6.6-1.04L12 2z"/></svg>
+                <svg class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.26L21.5 9.3l-4.75 4.63 1.13 6.57L12 17.4l-5.88 3.1 1.13-6.57L2.5 9.3l6.6-1.04L12 2z"/></svg>
+                <svg class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.26L21.5 9.3l-4.75 4.63 1.13 6.57L12 17.4l-5.88 3.1 1.13-6.57L2.5 9.3l6.6-1.04L12 2z"/></svg>
+              </div>
+              <blockquote class="mt-4 font-display text-lg italic leading-relaxed text-ink">
+                &ldquo;Ordered a pantry box for my mother-in-law at 10 a.m.,
+                it was on her step in Lincoln before her coffee the next
+                day. The hand-written card did the rest.&rdquo;
+              </blockquote>
+              <figcaption class="mt-4 text-sm text-muted">Dev P. &mdash; Welland</figcaption>
+            </figure>
+            <figure class="rounded-md border border-line bg-cream p-6">
+              <div class="flex gap-0.5 text-honey" aria-hidden="true">
+                <svg class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.26L21.5 9.3l-4.75 4.63 1.13 6.57L12 17.4l-5.88 3.1 1.13-6.57L2.5 9.3l6.6-1.04L12 2z"/></svg>
+                <svg class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.26L21.5 9.3l-4.75 4.63 1.13 6.57L12 17.4l-5.88 3.1 1.13-6.57L2.5 9.3l6.6-1.04L12 2z"/></svg>
+                <svg class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.26L21.5 9.3l-4.75 4.63 1.13 6.57L12 17.4l-5.88 3.1 1.13-6.57L2.5 9.3l6.6-1.04L12 2z"/></svg>
+                <svg class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.26L21.5 9.3l-4.75 4.63 1.13 6.57L12 17.4l-5.88 3.1 1.13-6.57L2.5 9.3l6.6-1.04L12 2z"/></svg>
+                <svg class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.26L21.5 9.3l-4.75 4.63 1.13 6.57L12 17.4l-5.88 3.1 1.13-6.57L2.5 9.3l6.6-1.04L12 2z"/></svg>
+              </div>
+              <blockquote class="mt-4 font-display text-lg italic leading-relaxed text-ink">
+                &ldquo;The icewine cider sells out every fall and I finally
+                caught it. Delivery was next morning, cold-packed, nothing
+                broken.&rdquo;
+              </blockquote>
+              <figcaption class="mt-4 text-sm text-muted">Elaine R. &mdash; Niagara-on-the-Lake</figcaption>
+            </figure>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ FIRST-ORDER PROMO ============ -->
+      <section class="border-b border-line">
+        <div class="mx-auto max-w-6xl px-4 py-14 sm:px-6 sm:py-16">
+          <div class="flex flex-col items-start justify-between gap-6 rounded-md border border-honey/40 bg-honey-soft p-7 sm:flex-row sm:items-center sm:p-10">
+            <div>
+              <p class="font-display text-xs font-semibold uppercase tracking-[0.18em] text-honey-dark">First order</p>
+              <h2 class="mt-3 font-display text-2xl font-semibold tracking-tight text-ink sm:text-3xl">
+                Code <span class="italic text-honey-dark">NIAGARA10</span> takes 10% off your first basket
+              </h2>
+              <p class="mt-3 max-w-xl text-sm leading-relaxed text-muted">
+                Apply it in the basket or at checkout &mdash; it works on
+                everything, including the bread and the flowers, and it stacks
+                on top of free delivery over $60.
+              </p>
+            </div>
+            <a
+              href="shop.html"
+              class="shrink-0 rounded-sm bg-forest px-7 py-3.5 text-sm font-semibold text-cream transition hover:-translate-y-px hover:bg-forest-dark"
+              >Start shopping</a
+            >
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ FAQ ============ -->
+      <section class="border-b border-line bg-white">
+        <div class="mx-auto max-w-3xl px-4 py-14 sm:px-6 sm:py-16">
+          <h2 class="font-display text-3xl font-semibold tracking-tight text-ink sm:text-4xl">
+            Before you ask
+          </h2>
+          <div class="mt-8 divide-y divide-line rounded-md border border-line">
+            <details class="group px-6 py-5">
+              <summary class="flex cursor-pointer items-center justify-between gap-4 font-display text-base font-semibold text-ink">
+                When does my order arrive?
+                <svg class="h-4 w-4 shrink-0 text-muted transition group-open:rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+              </summary>
+              <p class="mt-3 text-sm leading-relaxed text-muted">
+                Order by 11 a.m. and delivery lands the next morning, anywhere
+                in the Niagara Region. Bread is baked Friday and Saturday
+                mornings only, so bread orders close Thursday at 6 p.m.
+              </p>
+            </details>
+            <details class="group px-6 py-5">
+              <summary class="flex cursor-pointer items-center justify-between gap-4 font-display text-base font-semibold text-ink">
+                What does delivery cost?
+                <svg class="h-4 w-4 shrink-0 text-muted transition group-open:rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+              </summary>
+              <p class="mt-3 text-sm leading-relaxed text-muted">
+                A flat $7.95, free on baskets over $60, and pickup at the farm
+                stand is always free. HST is calculated at checkout so the
+                number you approve is the number you pay.
+              </p>
+            </details>
+            <details class="group px-6 py-5">
+              <summary class="flex cursor-pointer items-center justify-between gap-4 font-display text-base font-semibold text-ink">
+                Can I order cider and wine?
+                <svg class="h-4 w-4 shrink-0 text-muted transition group-open:rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+              </summary>
+              <p class="mt-3 text-sm leading-relaxed text-muted">
+                Yes &mdash; with ID. Alcohol orders are 19+ and the driver
+                checks at the door, exactly like at the market stall. No ID,
+                no handover, refund on the spot.
+              </p>
+            </details>
+            <details class="group px-6 py-5">
+              <summary class="flex cursor-pointer items-center justify-between gap-4 font-display text-base font-semibold text-ink">
+                What if a jar breaks or the flowers wilt?
+                <svg class="h-4 w-4 shrink-0 text-muted transition group-open:rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+              </summary>
+              <p class="mt-3 text-sm leading-relaxed text-muted">
+                Tell us within a day and it is replaced in the next van or
+                refunded, your choice. We pack jars in wood wool, but nobody
+                is perfect &mdash; we would rather fix it than argue about it.
+              </p>
+            </details>
+            <details class="group px-6 py-5">
+              <summary class="flex cursor-pointer items-center justify-between gap-4 font-display text-base font-semibold text-ink">
+                Is this a real store?
+                <svg class="h-4 w-4 shrink-0 text-muted transition group-open:rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+              </summary>
+              <p class="mt-3 text-sm leading-relaxed text-muted">
+                No &mdash; and it says so everywhere. Orchard Lane Provisions
+                is a demo online store built as a portfolio sample by
+                <a href="https://github.com/Artur25072001" target="_blank" rel="noopener" class="font-medium text-forest underline-offset-2 hover:underline">Artur Dymchevskyi</a>.
+                Every product, price, rating and review is fictional, and the
+                checkout collects no real payment &mdash; the whole flow
+                exists so you can click through a working shop.
+              </p>
+            </details>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ CLOSING CTA ============ -->
+      <section class="bg-forest">
+        <div class="mx-auto flex max-w-6xl flex-col items-start justify-between gap-6 px-4 py-14 sm:px-6 sm:py-16 md:flex-row md:items-center">
+          <div>
+            <h2 class="font-display text-3xl font-semibold tracking-tight text-cream sm:text-4xl">
+              The van leaves at 11.
+            </h2>
+            <p class="mt-3 max-w-xl text-base leading-relaxed text-cream/75">
+              Everything you put in the basket before then is packed, driven
+              and on your step the next morning. After that, it rides with
+              tomorrow&rsquo;s run.
+            </p>
+          </div>
+          <a
+            href="shop.html"
+            class="shrink-0 rounded-sm bg-cream px-7 py-3.5 text-sm font-semibold text-forest transition hover:-translate-y-px hover:bg-white"
+            >Shop the market</a
+          >
+        </div>
+      </section>
+    </main>
+
+    <script src="products.js"></script>
+    <script src="store.js"></script>
+    <script>
+      /* Homepage rendering: hero collage, category tiles, bestseller grid. */
+      (function () {
+        "use strict";
+
+        /* Hero collage: three product illustrations stacked in a grid. */
+        var HERO_IDS = ["wildflower-honey", "sourdough", "icewine-cider"];
+        document.getElementById("hero-art").innerHTML = HERO_IDS.map(function (id, i) {
+          var p = Store.find(id);
+          var tilt = i === 0 ? "-rotate-2" : i === 1 ? "rotate-1" : "-rotate-1";
+          var size = i === 0 ? "col-span-2" : "";
+          return (
+            '<div class="overflow-hidden rounded-md border border-line bg-white shadow-lg transition duration-300 hover:rotate-0 ' +
+            tilt + " " + size + '">' +
+            Store.art(p, "block h-full w-full") +
+            "</div>"
+          );
+        }).join("");
+
+        /* Category tiles: first product of each shelf as the tile art. */
+        document.getElementById("cat-tiles").innerHTML = CATEGORIES.map(function (c) {
+          var p = PRODUCTS.find(function (x) { return x.cat === c.id; });
+          return (
+            '<a href="shop.html?cat=' + c.id + '" class="group flex gap-5 overflow-hidden rounded-md border border-line bg-cream transition duration-300 hover:-translate-y-1 hover:shadow-lg">' +
+            '<span class="w-28 shrink-0 overflow-hidden sm:w-32">' + Store.art(p, "block h-full w-full") + "</span>" +
+            '<span class="flex flex-col justify-center py-4 pr-5">' +
+            '<span class="font-display text-lg font-semibold text-ink group-hover:text-forest">' + Store.esc(c.name) + "</span>" +
+            '<span class="mt-1 text-sm leading-relaxed text-muted">' + Store.esc(c.blurb) + "</span>" +
+            '<span class="mt-2.5 text-xs font-semibold uppercase tracking-[0.14em] text-forest">Shop &rarr;</span>' +
+            "</span></a>"
+          );
+        }).join("");
+
+        /* Bestsellers: the eight most-reviewed products this week. */
+        var best = PRODUCTS.slice()
+          .sort(function (a, b) { return b.reviews - a.reviews; })
+          .slice(0, 8);
+        document.getElementById("bestseller-grid").innerHTML = best
+          .map(function (p) { return Store.card(p); })
+          .join("");
+      })();
+    </script>
+  </body>
+</html>
+
+
+
+
+
+

@@ -1,0 +1,8 @@
+# Netlify response headers for this demo/preview site.
+#
+# These pages are portfolio samples for a fictional business, not a real
+# company, so they are deliberately kept out of search results. The same
+# directive is set with a noindex meta tag in every page's <head>; this header
+# covers anything the meta tag cannot reach (non-HTML files, error responses).
+/*
+  X-Robots-Tag: noindex, nofollow, noarchive, nosnippet, noimageindex

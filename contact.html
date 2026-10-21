@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en-CA">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- Demo/preview site: a fictional business used as a portfolio sample by
+         Artur Dymchevskyi. Not a real company; kept out of search results. -->
+    <meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex" />
+    <meta
+      name="description"
+      content="Contact Orchard Lane Provisions — questions about an order, wholesale or anything else. A demo contact form on a fictional farm-market store."
+    />
+    <title>Contact — Orchard Lane Provisions</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500..700&family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              forest: { DEFAULT: "#2C4A34", dark: "#223A29", soft: "#E8EEE6" },
+              honey: { DEFAULT: "#C6813F", dark: "#A86427", soft: "#F5E9D7" },
+              cream: "#FAF6EF",
+              line: "#E5DFD3",
+              ink: { DEFAULT: "#221F1A", muted: "#6B675F" },
+              berry: "#8E3B46",
+            },
+            fontFamily: {
+              sans: ["Inter", "ui-sans-serif", "system-ui", "sans-serif"],
+              display: ['"Fraunces"', "Georgia", "serif"],
+            },
+          },
+        },
+      };
+    </script>
+
+    <style>
+      body {
+        -webkit-font-smoothing: antialiased;
+        text-rendering: optimizeLegibility;
+      }
+      a:focus-visible,
+      button:focus-visible,
+      input:focus-visible,
+      select:focus-visible,
+      textarea:focus-visible,
+      summary:focus-visible {
+        outline: 2px solid #2c4a34;
+        outline-offset: 3px;
+        border-radius: 2px;
+      }
+    </style>
+  </head>
+
+  <body
+    data-page="contact.html"
+    class="flex min-h-screen flex-col bg-cream font-sans text-ink antialiased"
+  >
+    <main class="flex-1">
+      <div class="mx-auto max-w-3xl px-4 py-14 sm:px-6 sm:py-20">
+        <p class="text-xs font-semibold uppercase tracking-[0.18em] text-muted">Talk to the stand</p>
+        <h1 class="mt-3 font-display text-4xl font-semibold tracking-tight text-ink sm:text-5xl">
+          Contact
+        </h1>
+        <p class="mt-4 max-w-xl text-base leading-relaxed text-muted">
+          Order questions, wholesale, or something the FAQ did not answer &mdash;
+          send a note and the answer comes back within a day. For
+          &ldquo;where is my order&rdquo;, the
+          <a href="track.html" class="font-medium text-forest underline-offset-2 hover:underline">tracking page</a>
+          is faster.
+        </p>
+
+        <form
+          name="contact"
+          method="POST"
+          data-netlify="true"
+          data-netlify-honeypot="bot-field"
+          class="mt-10 rounded-md border border-line bg-white p-6 sm:p-8"
+        >
+          <input type="hidden" name="form-name" value="contact" />
+          <!-- Spam honeypot: hidden from people, dropped by Netlify. -->
+          <p style="display: none" aria-hidden="true">
+            <label>Leave this field empty if you are human: <input name="bot-field" tabindex="-1" autocomplete="off" /></label>
+          </p>
+
+          <div class="grid gap-5 sm:grid-cols-2">
+            <div>
+              <label for="c-name" class="block text-xs font-semibold uppercase tracking-[0.12em] text-ink">Name</label>
+              <input id="c-name" name="name" type="text" required autocomplete="name" placeholder="Jane Rossi"
+                class="mt-2.5 w-full rounded-sm border border-line bg-white px-4 py-3 text-sm text-ink placeholder:text-muted/60 transition focus:border-forest focus:outline-none" />
+            </div>
+            <div>
+              <label for="c-email" class="block text-xs font-semibold uppercase tracking-[0.12em] text-ink">Email</label>
+              <input id="c-email" name="email" type="email" required autocomplete="email" placeholder="you@example.com"
+                class="mt-2.5 w-full rounded-sm border border-line bg-white px-4 py-3 text-sm text-ink placeholder:text-muted/60 transition focus:border-forest focus:outline-none" />
+            </div>
+          </div>
+          <div class="mt-5">
+            <label for="c-topic" class="block text-xs font-semibold uppercase tracking-[0.12em] text-ink">What is it about?</label>
+            <select id="c-topic" name="topic" required
+              class="mt-2.5 w-full rounded-sm border border-line bg-white px-4 py-3 text-sm text-ink transition focus:border-forest focus:outline-none">
+              <option>A question about my order</option>
+              <option>Wholesale &amp; stocking the shelves</option>
+              <option>Something broke or wilted</option>
+              <option>Press &amp; photos</option>
+              <option>Something else</option>
+            </select>
+          </div>
+          <div class="mt-5">
+            <label for="c-message" class="block text-xs font-semibold uppercase tracking-[0.12em] text-ink">Message</label>
+            <textarea id="c-message" name="message" rows="5" required placeholder="Order number, if there is one&hellip;"
+              class="mt-2.5 w-full resize-y rounded-sm border border-line bg-white px-4 py-3 text-sm text-ink placeholder:text-muted/60 transition focus:border-forest focus:outline-none"></textarea>
+          </div>
+          <button type="submit" class="mt-7 rounded-sm bg-forest px-7 py-3.5 text-sm font-semibold text-cream transition hover:-translate-y-px hover:bg-forest-dark">
+            Send the note
+          </button>
+          <p class="mt-4 text-xs leading-relaxed text-muted">
+            Your details are used to answer this note and nothing else. This is
+            a demo store &mdash; the form is real, the farm is not.
+          </p>
+        </form>
+
+        <div class="mt-10 grid gap-6 sm:grid-cols-2">
+          <div class="rounded-md border border-line bg-white p-6">
+            <h2 class="font-display text-base font-semibold text-ink">The farm stand</h2>
+            <p class="mt-2 text-sm leading-relaxed text-muted">
+              429 Orchard Lane, on the Escarpment (a fictional address)<br />
+              Thursday to Sunday, 9 a.m. to 4 p.m.<br />
+              Free pickup for every online order.
+            </p>
+          </div>
+          <div class="rounded-md border border-line bg-white p-6">
+            <h2 class="font-display text-base font-semibold text-ink">Email the stand</h2>
+            <p class="mt-2 text-sm leading-relaxed text-muted">
+              hello@orchardlane.example<br />
+              Answered within one day, usually the same evening.<br />
+              Order questions: include the OL- number.
+            </p>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <script src="products.js"></script>
+    <script src="store.js"></script>
+  </body>
+</html>

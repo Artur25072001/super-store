@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="en-CA">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- Demo/preview site: a fictional business used as a portfolio sample by
+         Artur Dymchevskyi. Not a real company; kept out of search results. -->
+    <meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex" />
+    <meta
+      name="description"
+      content="Track your Orchard Lane order — enter your order number and see whether it is received, being packed, out for delivery or already on your step."
+    />
+    <title>Track Your Order — Orchard Lane Provisions</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500..700&family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              forest: { DEFAULT: "#2C4A34", dark: "#223A29", soft: "#E8EEE6" },
+              honey: { DEFAULT: "#C6813F", dark: "#A86427", soft: "#F5E9D7" },
+              cream: "#FAF6EF",
+              line: "#E5DFD3",
+              ink: { DEFAULT: "#221F1A", muted: "#6B675F" },
+              berry: "#8E3B46",
+            },
+            fontFamily: {
+              sans: ["Inter", "ui-sans-serif", "system-ui", "sans-serif"],
+              display: ['"Fraunces"', "Georgia", "serif"],
+            },
+          },
+        },
+      };
+    </script>
+
+    <style>
+      body {
+        -webkit-font-smoothing: antialiased;
+        text-rendering: optimizeLegibility;
+      }
+      a:focus-visible,
+      button:focus-visible,
+      input:focus-visible,
+      select:focus-visible,
+      summary:focus-visible {
+        outline: 2px solid #2c4a34;
+        outline-offset: 3px;
+        border-radius: 2px;
+      }
+    </style>
+  </head>
+
+  <body
+    data-page="track.html"
+    class="flex min-h-screen flex-col bg-cream font-sans text-ink antialiased"
+  >
+    <main class="flex-1">
+      <div class="mx-auto max-w-2xl px-4 py-14 sm:px-6 sm:py-20">
+        <p class="text-xs font-semibold uppercase tracking-[0.18em] text-muted">After the checkout</p>
+        <h1 class="mt-3 font-display text-4xl font-semibold tracking-tight text-ink sm:text-5xl">
+          Where is my order?
+        </h1>
+        <p class="mt-4 text-base leading-relaxed text-muted">
+          Type your order number &mdash; it is on your confirmation, and it looks
+          like <code class="rounded bg-forest-soft px-1.5 py-0.5 font-mono text-sm text-forest-dark">OL-2026-0001</code>.
+          No account, no password, just the number.
+        </p>
+
+        <form id="track-form" class="mt-8 flex flex-wrap gap-2 sm:flex-nowrap" novalidate>
+          <label for="track-no" class="sr-only">Order number</label>
+          <input
+            id="track-no"
+            type="text"
+            placeholder="OL-2026-0001"
+            autocomplete="off"
+            class="min-w-0 flex-1 rounded-sm border border-line bg-white px-4 py-3 text-sm uppercase tracking-wide text-ink placeholder:tracking-wide placeholder:text-muted/70 transition focus:border-forest focus:outline-none"
+          />
+          <button
+            type="submit"
+            class="shrink-0 rounded-sm bg-forest px-6 py-3 text-sm font-semibold text-cream transition hover:-translate-y-px hover:bg-forest-dark"
+          >
+            Track it
+          </button>
+        </form>
+        <p id="track-err" class="mt-2.5 hidden text-xs text-berry">
+          We could not find that number. Check it against your confirmation &mdash;
+          or try the demo number OL-2026-0001.
+        </p>
+
+        <div id="track-result" class="mt-10 hidden rounded-md border border-line bg-white p-6 sm:p-8"></div>
+
+        <p class="mt-10 text-xs leading-relaxed text-muted">
+          A demo page on a demo store: the statuses below are simulated from the
+          time an order was placed, and only orders placed in this browser (or
+          the demo number) are found. Built as a portfolio sample by
+          <a href="https://github.com/Artur25072001" target="_blank" rel="noopener" class="font-medium text-forest underline-offset-2 hover:underline">Artur Dymchevskyi</a>.
+        </p>
+      </div>
+    </main>
+
+    <script src="products.js"></script>
+    <script src="store.js"></script>
+    <script>
+      /* Order tracking: looks the number up locally and simulates the
+         progress from the time the order was placed. */
+      (function () {
+        "use strict";
+        var STAGES = {
+          delivery: [
+            ["Order received", "We have your basket and the morning pack list has it."],
+            ["Being packed", "The bakery runs at 5 a.m. and the jars get wood-wool wrapped right after."],
+            ["Out for delivery", "On the van. Next stop: your step."],
+            ["Delivered", "Left where you asked (or with the neighbour you named). Enjoy."],
+          ],
+          pickup: [
+            ["Order received", "We have your basket and the morning pack list has it."],
+            ["Being packed", "Your box goes into the cold room with your name on it."],
+            ["Ready for pickup", "Waiting at the stand, Thu\u2013Sun 9\u20134. Bring a bag."],
+            ["Picked up", "Picked up and gone. Thanks for coming out."],
+          ],
+        };
+
+        function stageOf(minutes) {
+          if (minutes < 15) return 1;
+          if (minutes < 12 * 60) return 2;
+          if (minutes < 24 * 60) return 3;
+          return 4;
+        }
+
+        function render(order) {
+          var box = document.getElementById("track-result");
+          var stages = STAGES[order.mode] || STAGES.delivery;
+          var minutes = Math.max(0, (Date.now() - order.ts) / 60000);
+          var current = order.demo ? 2 : stageOf(minutes);
+
+          var placed = new Date(order.ts).toLocaleString("en-CA", {
+            weekday: "long", month: "long", day: "numeric", hour: "numeric", minute: "2-digit",
+          });
+
+          var rows = stages
+            .map(function (s, i) {
+              var n = i + 1;
+              var done = n <= current;
+              var isCurrent = n === current;
+              return (
+                '<li class="flex gap-4">' +
+                '<span class="flex flex-col items-center">' +
+                '<span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full ' +
+                (done ? "bg-forest text-cream" : "border border-line bg-white text-muted") + '">' +
+                (done
+                  ? '<svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>'
+                  : n) +
+                "</span>" +
+                (n < stages.length ? '<span class="mt-1 w-px flex-1 ' + (n < current ? "bg-forest" : "bg-line") + '"></span>' : "") +
+                "</span>" +
+                '<div class="' + (n < stages.length ? "pb-6" : "") + '">' +
+                '<p class="font-display text-base font-semibold ' + (done ? "text-ink" : "text-muted") + '">' + s[0] +
+                (isCurrent ? '<span class="ml-2 rounded-full bg-forest-soft px-2.5 py-0.5 text-[0.6rem] font-semibold uppercase tracking-[0.12em] text-forest-dark">Current</span>' : "") +
+                "</p>" +
+                (isCurrent ? '<p class="mt-1 max-w-md text-sm leading-relaxed text-muted">' + s[1] + "</p>" : "") +
+                "</div></li>"
+              );
+            })
+            .join("");
+
+          box.innerHTML =
+            '<div class="flex flex-wrap items-baseline justify-between gap-3 border-b border-line pb-5">' +
+            '<div><p class="text-xs font-semibold uppercase tracking-[0.14em] text-muted">Order</p>' +
+            '<p class="mt-1 font-display text-2xl font-bold text-forest">' + Store.esc(order.no) + "</p></div>" +
+            '<p class="text-sm text-muted">Placed ' + Store.esc(placed) +
+            (order.demo ? " &middot; a demo order" : "") + "</p>" +
+            "</div>" +
+            '<ol class="mt-6" aria-label="Order progress">' + rows + "</ol>" +
+            '<div class="mt-6 flex flex-wrap gap-3 border-t border-line pt-5">' +
+            '<a href="shop.html" class="rounded-sm border border-forest px-5 py-2.5 text-sm font-semibold text-forest transition hover:bg-forest hover:text-cream">Back to the market</a>' +
+            '<a href="contact.html" class="rounded-sm border border-line px-5 py-2.5 text-sm font-semibold text-muted transition hover:border-forest hover:text-forest">Something wrong with it?</a>' +
+            "</div>";
+          box.classList.remove("hidden");
+        }
+
+        document.getElementById("track-form").addEventListener("submit", function (e) {
+          e.preventDefault();
+          var no = document.getElementById("track-no").value.trim();
+          var order = no ? Store.findOrder(no) : null;
+          document.getElementById("track-err").classList.toggle("hidden", !!order);
+          document.getElementById("track-result").classList.toggle("hidden", !order);
+          if (order) render(order);
+        });
+
+        /* Arriving from the confirmation page (?no=) or curious? Prefill. */
+        var pre = new URLSearchParams(location.search).get("no");
+        if (pre) {
+          document.getElementById("track-no").value = pre;
+          var order = Store.findOrder(pre);
+          if (order) render(order);
+          else document.getElementById("track-err").classList.remove("hidden");
+        }
+      })();
+    </script>
+  </body>
+</html>

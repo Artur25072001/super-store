@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="en-CA">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- Demo/preview site: a fictional business used as a portfolio sample by
+         Artur Dymchevskyi. Not a real company; kept out of search results. -->
+    <meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex" />
+    <meta
+      name="description"
+      content="Order confirmed — Orchard Lane Provisions demo store. Your demo order number, contents, totals and next steps."
+    />
+    <title>Order Confirmed — Orchard Lane Provisions</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500..700&family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              forest: { DEFAULT: "#2C4A34", dark: "#223A29", soft: "#E8EEE6" },
+              honey: { DEFAULT: "#C6813F", dark: "#A86427", soft: "#F5E9D7" },
+              cream: "#FAF6EF",
+              line: "#E5DFD3",
+              ink: { DEFAULT: "#221F1A", muted: "#6B675F" },
+              berry: "#8E3B46",
+            },
+            fontFamily: {
+              sans: ["Inter", "ui-sans-serif", "system-ui", "sans-serif"],
+              display: ['"Fraunces"', "Georgia", "serif"],
+            },
+          },
+        },
+      };
+    </script>
+
+    <style>
+      body {
+        -webkit-font-smoothing: antialiased;
+        text-rendering: optimizeLegibility;
+      }
+      a:focus-visible,
+      button:focus-visible,
+      input:focus-visible,
+      select:focus-visible,
+      summary:focus-visible {
+        outline: 2px solid #2c4a34;
+        outline-offset: 3px;
+        border-radius: 2px;
+      }
+    </style>
+  </head>
+
+  <body
+    data-page="order-confirmed.html"
+    class="flex min-h-screen flex-col bg-cream font-sans text-ink antialiased"
+  >
+    <main class="flex-1">
+      <div class="mx-auto max-w-3xl px-4 py-14 sm:px-6 sm:py-20">
+        <!-- No-order fallback -->
+        <div id="no-order" class="hidden rounded-md border border-line bg-white px-6 py-14 text-center">
+          <p class="font-display text-xl font-semibold text-ink">No order to show</p>
+          <p class="mx-auto mt-2 max-w-md text-sm leading-relaxed text-muted">
+            There is no recent order on this device &mdash; place one through the
+            checkout and it will appear here.
+          </p>
+          <a href="shop.html" class="mt-5 inline-flex rounded-sm bg-forest px-5 py-2.5 text-sm font-semibold text-cream transition hover:bg-forest-dark">Browse the market</a>
+        </div>
+
+        <div id="confirmed">
+          <p class="inline-flex items-center gap-2 rounded-full border border-forest/25 bg-forest-soft px-3.5 py-1.5 text-xs font-semibold uppercase tracking-[0.14em] text-forest-dark">
+            <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>
+            Order received
+          </p>
+          <h1 class="mt-5 font-display text-4xl font-semibold tracking-tight text-ink sm:text-5xl">
+            Your order is in.
+          </h1>
+          <p class="mt-4 max-w-xl text-lg leading-relaxed text-muted">
+            Thanks, <strong class="text-ink" id="o-name"></strong> &mdash; your
+            basket is on the morning pack list. A (pretend) confirmation is on
+            its way to <strong class="text-ink" id="o-email"></strong>.
+          </p>
+
+          <div class="mt-8 rounded-md border border-line bg-white p-6 sm:p-8">
+            <div class="flex flex-wrap items-baseline justify-between gap-3">
+              <div>
+                <p class="text-xs font-semibold uppercase tracking-[0.14em] text-muted">Order number</p>
+                <p id="o-no" class="mt-1.5 font-display text-3xl font-bold tracking-tight text-forest"></p>
+              </div>
+              <p id="o-eta" class="text-sm text-muted"></p>
+            </div>
+
+            <h2 class="mt-8 font-display text-base font-semibold tracking-tight text-ink">In the box</h2>
+            <div id="o-items" class="mt-4 space-y-3"></div>
+
+            <dl id="o-totals" class="mt-6 space-y-3 border-t border-line pt-5 text-sm"></dl>
+
+            <div id="o-address" class="mt-6 rounded-sm border border-line bg-cream px-4 py-3.5 text-sm leading-relaxed text-muted"></div>
+          </div>
+
+          <div class="mt-8 grid gap-4 sm:grid-cols-2">
+            <a id="o-track" href="track.html" class="flex items-center justify-center rounded-sm bg-forest px-6 py-3.5 text-sm font-semibold text-cream transition hover:-translate-y-px hover:bg-forest-dark">
+              Track this order
+            </a>
+            <a href="shop.html" class="flex items-center justify-center rounded-sm border border-forest px-6 py-3.5 text-sm font-semibold text-forest transition hover:-translate-y-px hover:bg-forest hover:text-cream">
+              Keep shopping
+            </a>
+          </div>
+
+          <p class="mt-8 text-xs leading-relaxed text-muted">
+            A reminder from the footer of every page: Orchard Lane Provisions is
+            a demo store built as a portfolio sample by
+            <a href="https://github.com/Artur25072001" target="_blank" rel="noopener" class="font-medium text-forest underline-offset-2 hover:underline">Artur Dymchevskyi</a>.
+            This order was stored in your browser only, and nothing was &mdash; or
+            ever will be &mdash; charged.
+          </p>
+        </div>
+      </div>
+    </main>
+
+    <script src="products.js"></script>
+    <script src="store.js"></script>
+    <script>
+      /* Order confirmation: renders the order placed at checkout. */
+      (function () {
+        "use strict";
+        var order = Store.lastOrder();
+        if (!order) {
+          document.getElementById("confirmed").classList.add("hidden");
+          document.getElementById("no-order").classList.remove("hidden");
+          return;
+        }
+
+        document.getElementById("o-name").textContent = (order.name.split(" ")[0] || order.name);
+        document.getElementById("o-email").textContent = order.email;
+        document.getElementById("o-no").textContent = order.no;
+        document.getElementById("o-track").href = "track.html?no=" + encodeURIComponent(order.no);
+
+        /* ETA: the next day after the order was placed. */
+        var eta = new Date(order.ts + 24 * 60 * 60 * 1000);
+        document.getElementById("o-eta").textContent =
+          (order.mode === "pickup" ? "Ready for pickup: " : "Arriving: ") +
+          eta.toLocaleDateString("en-CA", { weekday: "long", month: "long", day: "numeric" });
+
+        document.getElementById("o-items").innerHTML = order.items
+          .map(function (it) {
+            return (
+              '<div class="flex items-center gap-3">' +
+              '<span class="block h-12 w-12 shrink-0 overflow-hidden rounded-sm">' + Store.art(Store.find(it.id)) + "</span>" +
+              '<span class="min-w-0 flex-1">' +
+              '<span class="block truncate text-sm font-medium text-ink">' + Store.esc(it.name) + "</span>" +
+              '<span class="block text-xs text-muted">' + (it.variant ? Store.esc(it.variant) + " &middot; " : "") + "&times; " + it.q + "</span>" +
+              "</span>" +
+              '<span class="text-sm font-semibold text-ink">' + Store.fmt(it.unit * it.q) + "</span>" +
+              "</div>"
+            );
+          })
+          .join("");
+
+        var t = order.totals || {};
+        document.getElementById("o-totals").innerHTML =
+          '<div class="flex items-baseline justify-between gap-4"><dt class="text-muted">Subtotal</dt><dd class="font-medium">' + Store.fmt(t.sub || 0) + "</dd></div>" +
+          (t.discount ? '<div class="flex items-baseline justify-between gap-4"><dt class="text-muted">Discount</dt><dd class="font-medium text-forest">-' + Store.fmt(t.discount) + "</dd></div>" : "") +
+          '<div class="flex items-baseline justify-between gap-4"><dt class="text-muted">' + (order.mode === "pickup" ? "Pickup" : "Delivery") + '</dt><dd class="font-medium">' + (t.shipping ? Store.fmt(t.shipping) : "Free") + "</dd></div>" +
+          '<div class="flex items-baseline justify-between gap-4"><dt class="text-muted">HST</dt><dd class="font-medium">' + Store.fmt(t.tax || 0) + "</dd></div>" +
+          '<div class="flex items-baseline justify-between gap-4 border-t border-line pt-3"><dt class="font-display text-base font-semibold text-ink">Total</dt><dd class="font-display text-xl font-bold text-ink">' + Store.fmt(t.total || 0) + "</dd></div>";
+
+        var payMap = {
+          card: "card on the driver's reader",
+          cash: "cash",
+          etransfer: "Interac e-Transfer (details in your confirmation)",
+        };
+        var pay = payMap[order.payment] || order.payment || "card";
+        var isSnip = /snipcart/i.test(order.payment || "");
+        var addrParts = [order.street, order.city, order.postal]
+          .filter(Boolean)
+          .map(Store.esc)
+          .join(", ");
+        document.getElementById("o-address").innerHTML =
+          order.mode === "pickup"
+            ? "<strong class='text-ink'>Pickup at the farm stand</strong> — 429 Orchard Lane (fictional), Thursday to Sunday, 9 a.m. to 4 p.m. Bring a bag."
+            : "<strong class='text-ink'>" + (addrParts ? "Delivering to" : "Delivery") + "</strong> — " +
+              (addrParts || "address captured in the live test checkout") +
+              (order.notes ? "<br>Notes: " + Store.esc(order.notes) : "") +
+              "<br>" +
+              (isSnip
+                ? "Paid in the Snipcart test checkout — a test card, no money moved."
+                : "Pay at the door: " + pay);
+      })();
+    </script>
+  </body>
+</html>
