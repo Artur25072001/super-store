@@ -409,7 +409,14 @@
               id: l.p.id + (l.p.variants ? "-v" + l.v : ""),
               name: l.p.name,
               price: l.unit,
-              url: new URL("product.html?id=" + l.p.id, location.href).href,
+              /* At payment time Snipcart re-validates every line: it fetches
+                 /products.json (generated from this store's catalogue by
+                 tools/gen-snipcart-json.mjs) and matches the id, price,
+                 custom fields and stock. The JSON is served from the server,
+                 so nothing tampered with in a browser can change what gets
+                 charged. Change a price in products.js, re-run the
+                 generator, redeploy. */
+              url: "/products.json",
               quantity: l.q,
               description: "Demo product — Orchard Lane Provisions",
               customFields: l.variant

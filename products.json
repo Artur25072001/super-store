@@ -1,0 +1,291 @@
+[
+  {
+    "id": "strawberry-rhubarb",
+    "name": "Strawberry & Rhubarb Jam",
+    "price": 9.5,
+    "url": "/product.html?id=strawberry-rhubarb",
+    "stock": 34
+  },
+  {
+    "id": "peach-vanilla",
+    "name": "Peach & Vanilla Bean Jam",
+    "price": 9.5,
+    "url": "/product.html?id=peach-vanilla",
+    "stock": 41
+  },
+  {
+    "id": "blueberry-lavender",
+    "name": "Blueberry & Lavender Jam",
+    "price": 10,
+    "url": "/product.html?id=blueberry-lavender",
+    "stock": 27
+  },
+  {
+    "id": "hot-pepper-jelly",
+    "name": "Hot Pepper Jelly",
+    "price": 9,
+    "url": "/product.html?id=hot-pepper-jelly",
+    "stock": 52
+  },
+  {
+    "id": "grape-jelly",
+    "name": "Concord Grape Jelly",
+    "price": 8.5,
+    "url": "/product.html?id=grape-jelly",
+    "stock": 63
+  },
+  {
+    "id": "wildflower-honey-v0",
+    "name": "Wildflower Honey",
+    "price": 14,
+    "url": "/product.html?id=wildflower-honey",
+    "stock": 38,
+    "customFields": [
+      {
+        "name": "Choice",
+        "type": "textbox"
+      }
+    ]
+  },
+  {
+    "id": "wildflower-honey-v1",
+    "name": "Wildflower Honey",
+    "price": 25,
+    "url": "/product.html?id=wildflower-honey",
+    "stock": 38,
+    "customFields": [
+      {
+        "name": "Choice",
+        "type": "textbox"
+      }
+    ]
+  },
+  {
+    "id": "buckwheat-honey",
+    "name": "Buckwheat Honey",
+    "price": 16,
+    "url": "/product.html?id=buckwheat-honey",
+    "stock": 19
+  },
+  {
+    "id": "maple-syrup",
+    "name": "Dark Maple Syrup",
+    "price": 18,
+    "url": "/product.html?id=maple-syrup",
+    "stock": 44
+  },
+  {
+    "id": "orchard-blend-v0",
+    "name": "Orchard Blend Coffee",
+    "price": 18,
+    "url": "/product.html?id=orchard-blend",
+    "stock": 47,
+    "customFields": [
+      {
+        "name": "Choice",
+        "type": "textbox"
+      }
+    ]
+  },
+  {
+    "id": "orchard-blend-v1",
+    "name": "Orchard Blend Coffee",
+    "price": 18,
+    "url": "/product.html?id=orchard-blend",
+    "stock": 47,
+    "customFields": [
+      {
+        "name": "Choice",
+        "type": "textbox"
+      }
+    ]
+  },
+  {
+    "id": "orchard-blend-v2",
+    "name": "Orchard Blend Coffee",
+    "price": 18,
+    "url": "/product.html?id=orchard-blend",
+    "stock": 47,
+    "customFields": [
+      {
+        "name": "Choice",
+        "type": "textbox"
+      }
+    ]
+  },
+  {
+    "id": "dusk-roast-v0",
+    "name": "Dusk Roast Coffee",
+    "price": 18,
+    "url": "/product.html?id=dusk-roast",
+    "stock": 33,
+    "customFields": [
+      {
+        "name": "Choice",
+        "type": "textbox"
+      }
+    ]
+  },
+  {
+    "id": "dusk-roast-v1",
+    "name": "Dusk Roast Coffee",
+    "price": 18,
+    "url": "/product.html?id=dusk-roast",
+    "stock": 33,
+    "customFields": [
+      {
+        "name": "Choice",
+        "type": "textbox"
+      }
+    ]
+  },
+  {
+    "id": "dusk-roast-v2",
+    "name": "Dusk Roast Coffee",
+    "price": 18,
+    "url": "/product.html?id=dusk-roast",
+    "stock": 33,
+    "customFields": [
+      {
+        "name": "Choice",
+        "type": "textbox"
+      }
+    ]
+  },
+  {
+    "id": "breakfast-tea",
+    "name": "Niagara Breakfast Tea",
+    "price": 12,
+    "url": "/product.html?id=breakfast-tea",
+    "stock": 58
+  },
+  {
+    "id": "chamomile",
+    "name": "Chamomile & Lemon Balm",
+    "price": 11,
+    "url": "/product.html?id=chamomile",
+    "stock": 61
+  },
+  {
+    "id": "sourdough",
+    "name": "Saturday Sourdough Loaf",
+    "price": 9,
+    "url": "/product.html?id=sourdough",
+    "stock": 22
+  },
+  {
+    "id": "seeded-rye",
+    "name": "Seeded Rye Loaf",
+    "price": 9.5,
+    "url": "/product.html?id=seeded-rye",
+    "stock": 18
+  },
+  {
+    "id": "butter-tarts",
+    "name": "Butter Tarts, 6 pack",
+    "price": 14,
+    "url": "/product.html?id=butter-tarts",
+    "stock": 30
+  },
+  {
+    "id": "cinnamon-buns",
+    "name": "Cinnamon Buns, 4 pack",
+    "price": 12,
+    "url": "/product.html?id=cinnamon-buns",
+    "stock": 26
+  },
+  {
+    "id": "icewine-cider",
+    "name": "Icewine Cider, 750 ml",
+    "price": 21,
+    "url": "/product.html?id=icewine-cider",
+    "stock": 12
+  },
+  {
+    "id": "sparkling-4pk",
+    "name": "Sparkling Apple, 4 pack",
+    "price": 16,
+    "url": "/product.html?id=sparkling-4pk",
+    "stock": 29
+  },
+  {
+    "id": "apple-juice",
+    "name": "Fresh-Pressed Apple Juice",
+    "price": 8,
+    "url": "/product.html?id=apple-juice",
+    "stock": 70
+  },
+  {
+    "id": "cranberry-shrub",
+    "name": "Cranberry Shrub",
+    "price": 13,
+    "url": "/product.html?id=cranberry-shrub",
+    "stock": 24
+  },
+  {
+    "id": "morning-bouquet-v0",
+    "name": "Morning Bouquet",
+    "price": 35,
+    "url": "/product.html?id=morning-bouquet",
+    "stock": 15,
+    "customFields": [
+      {
+        "name": "Choice",
+        "type": "textbox"
+      }
+    ]
+  },
+  {
+    "id": "morning-bouquet-v1",
+    "name": "Morning Bouquet",
+    "price": 47,
+    "url": "/product.html?id=morning-bouquet",
+    "stock": 15,
+    "customFields": [
+      {
+        "name": "Choice",
+        "type": "textbox"
+      }
+    ]
+  },
+  {
+    "id": "market-bouquet-v0",
+    "name": "Market Bouquet",
+    "price": 45,
+    "url": "/product.html?id=market-bouquet",
+    "stock": 12,
+    "customFields": [
+      {
+        "name": "Choice",
+        "type": "textbox"
+      }
+    ]
+  },
+  {
+    "id": "market-bouquet-v1",
+    "name": "Market Bouquet",
+    "price": 57,
+    "url": "/product.html?id=market-bouquet",
+    "stock": 12,
+    "customFields": [
+      {
+        "name": "Choice",
+        "type": "textbox"
+      }
+    ]
+  },
+  {
+    "id": "pantry-box",
+    "name": "Pantry Gift Box",
+    "price": 59,
+    "url": "/product.html?id=pantry-box",
+    "stock": 20
+  },
+  {
+    "id": "chocolate-jam-duo",
+    "name": "Dark Chocolate & Jam Duo",
+    "price": 29,
+    "url": "/product.html?id=chocolate-jam-duo",
+    "stock": 23
+  }
+]

@@ -4,6 +4,14 @@
    checkout.html and index.html. Product art is generated as inline SVG
    by store.js from each item's `art` block, so this demo needs no stock
    photography. All products, prices, ratings and reviews are fictional.
+
+   Snipcart: this file is also the source of truth for order validation.
+   tools/gen-snipcart-json.mjs reads it and writes products.json — the
+   document Snipcart's crawler fetches at payment time to verify every
+   id, price, custom field and stock level. If you change a price, a name,
+   a variant or a product here, run `node tools/gen-snipcart-json.mjs`
+   and commit the updated products.json together with this file —
+   otherwise checkout validation fails with a price mismatch.
 */
 "use strict";
 
